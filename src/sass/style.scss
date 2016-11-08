@@ -27,7 +27,7 @@ body {
   width:100%;
   height:100%;
   position:fixed;
-  // background-color:#34495e;
+  background-color:$background;
 }
 
 .content {
@@ -53,6 +53,7 @@ body {
 .tofu{
   width: 100%;
   text-align: center;
+  color:$grey;
   &__input{
     font-size:30px;
   }
@@ -62,14 +63,22 @@ body {
   &__button{
     display:none;
     border-radius: 5px;
-    border:2px solid black;
+    border:2px solid $grey;
     padding:5px 10px;
+    text-transform: uppercase;
     margin-top:30px;
     animation: fadeIn 2s ease;
     &:hover{
       cursor: pointer;
     }
   }
+  &__animation{
+    opacity: 0;
+  }
+}
+
+.fade{
+  animation: fadeIn .7s ease;
 }
 
 

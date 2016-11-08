@@ -15,11 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       value.push(e.key.toUpperCase())
       tofuInput.innerHTML += '<span class="tofu__character">□</span>'
+      console.log(value);
     }
-
-    // users click on "no more tofu" button
-    tofuButton.addEventListener('click', () => {
-      tofuInput.innerHTML = value.join('<span class="tofu__character"></span>')
-    })
   })
+
+  // users click on "no more tofu" button
+  tofuButton.addEventListener('click', () => {
+    tofuInput.innerHTML = ''
+    const $characters = document.querySelectorAll('.tofu__character')
+    const tofuCharacter = document.querySelector('.tofu__character')
+    for (let i = 0; i < value.length; i++) {
+      tofuInput.innerHTML += `<span class="tofu__character tofu__animation tofu__character__${i}">${value[i]}</span>`
+      setTimeout(() => {
+        const $char = document.querySelector(`.tofu__character__${i}`)
+        $char.style.opacity = 1
+        $char.style.animation = 'fadeIn 2s ease'
+      }, i * 200)
+    }
+  })
+
 })
