@@ -1,22 +1,27 @@
-const Koa = require( 'koa' )
-const IO = require( 'koa-socket' )
+const app = require('express')()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 
-const app = new Koa()
-const io = new IO()
+var messages = []
 
-// Attach the socket to the application
-io.attach( app )
-
-// Socket is now available as app.io if you prefer
-app.io.on( event, eventHandler )
-
-// The raw socket.io instance is attached as app._io if you need it
-app._io.on( 'connection', sock => {
-  // ...
+app.get('/notoboard', function(req, res){
+  res.sendFile(__dirname + '/notoboard.html')
 })
 
-// app.listen is mapped to app.server.listen, so you can just do:
-app.listen( process.env.PORT || 3000 )
+io.on('connection', function(socket){
+  console.log('a user connected')
+  socket.on('chat message', function(msg){
+    // Send message to clients
+    io.emit('chat message', msg)
+    messages.push(msg)
+    console.log(messages)
+  })
 
-// *If* you had manually attached an `app.server` yourself, you should do:
-app.server.listen( process.env.PORT || 3000 )
+  socket.on('disconnect', function(){
+    console.log('user disconnected')
+  })
+})
+
+http.listen(3000, function(){
+  console.log('listening on *:3000')
+})

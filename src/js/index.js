@@ -1,1 +1,3 @@
-console.log('Noto Font')
+import * as io from 'socket.io-client'
+
+console.log('notoboard')
