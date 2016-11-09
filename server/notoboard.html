@@ -7,28 +7,26 @@
       .messages { list-style-type: none; }
     </style>
   </head>
-
   <body>
     <ul class="messages"></ul>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
-      socket.on('previous messages', function(allMessages){
-        allMessages.forEach(function(item){
-          // Append message
-          var li = document.createElement("li");
-          var m = document.createTextNode(item);
-          li.appendChild(m);
-          document.querySelector('.messages').appendChild(li);
-        })
+      const socket = io()
+      const $messages = document.querySelector('.messages')
+
+      // Get all previous message
+      socket.on('previous messages', (messages) => {
+        $messages.innerHTML = messages.map((message) => `
+          <li>${message}</li>
+        `).join('')
       })
-      socket.on('chat message', function(msg){
-        // Append message
-        var li = document.createElement("li");
-        var m = document.createTextNode(msg);
-        li.appendChild(m);
-        document.querySelector('.messages').appendChild(li);
-      });
+
+      // Get last message
+      socket.on('chat message', (message) => {
+        $messages.innerHTML += `
+          <li>${message}</li>>
+        `
+      })
     </script>
   </body>
 </html>
