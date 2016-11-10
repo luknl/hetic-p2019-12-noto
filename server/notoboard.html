@@ -4,30 +4,26 @@
     <title>Notoboard</title>
     <style>
       .messages { list-style-type: none; }
-      .room { width: 100px; height: 100px; border-radius: 50%; background-color: grey; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;}
+      .rooms-item { width: 100px; height: 100px; border-radius: 50%; background-color: grey; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;}
     </style>
   </head>
   <body>
     <ul class="messages"></ul>
-    <div id="room1" class="room" onClick="join_room(this.id)">
-      Room 1
-    </div>
-    <div id="room2" class="room" onClick="join_room(this.id)">
-      Room 2
-    </div>
+    <div class="rooms"></div>
     <h4 class="url-connection"></h4>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io()
-      const messages = document.querySelector('.messages')
-      let rooms = []
+      const $messages = document.querySelector('.messages')
+      const $rooms = document.querySelector('.rooms')
+      let roomsList = []
 
       document.addEventListener("DOMContentLoaded", function(event) {
         // Generate ID
-        const userId = Math.floor(Math.random()*100000)
+        const userId = Math.floor(Math.random()*1000)
 
         // Inject client ID url
-        document.querySelector('.url-connection').innerHTML = "website-url.com/" + userId;
+        document.querySelector('.url-connection').innerHTML = `<a href="http://localhost:3000/send/${userId}" target="_blank" >http://localhost:3000/send/${userId}</a>`;
 
         // Link user to an ID
         socket.emit('new user', userId);
@@ -35,25 +31,39 @@
 
       // Get all previous message
       socket.on('previous messages', (messages) => {
-        messages.innerHTML = messages.map((message) => `
-          <li>${message}</li>
+        $messages.innerHTML = messages.map((message) => `
+          <li>${message.msg}</li>
+        `).join('')
+      })
+
+      socket.on('previous rooms', (rooms) => {
+        $rooms.innerHTML = rooms.map((room) => `
+          <div id="${room}" class="rooms-item" onClick="join_room(this.id)">${room}</div>
         `).join('')
       })
 
       // Get last message
-      socket.on('chat message', (message) => {
-        messages.innerHTML += `
-          <li>${message}</li>
+      socket.on('chat message', (data) => {
+        $messages.innerHTML += `
+          <li>${data.msg}</li>
+        `
+      })
+
+      // Listen for new rooms creations
+      socket.on('add room', (data) => {
+        $rooms.innerHTML += `
+        <div id="${data.roomId}" class="rooms-item" onClick="join_room(this.id)">${data.roomName}</div>
         `
       })
 
       // Join room
       function join_room(roomName){
-        rooms.forEach(function(room){
+        roomsList.forEach(function(room){
           socket.emit('leave room', room)
         })
         socket.emit('join room', roomName)
-        rooms.push(roomName)
+        roomsList.push(roomName)
+        $messages.innerHTML = ''
       }
     </script>
   </body>
