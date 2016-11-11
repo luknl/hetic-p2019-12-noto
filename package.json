@@ -27,6 +27,7 @@
     "browser-sync": "^2.10.0",
     "del": "^2.1.0",
     "eslint": "^3.9.1",
+    "flow-bin": "v0.34.0",
     "gulp": "^3.8.11",
     "gulp-base64": "^0.1.2",
     "gulp-cached": "^1.1.0",
