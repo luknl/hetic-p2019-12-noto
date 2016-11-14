@@ -1,18 +1,31 @@
 .tofu {
   color: $grey;
+
   &__title {
     text-transform: uppercase;
+    margin-top: -200px;
+    font-weight: bold;
+    font-size: 150%;
   }
+
   &__span {
+    position: absolute;
+    padding-top: 150px;
     animation: blink 1s ease infinite;
   }
+
   &__input {
     font-size: 300%;
   }
+
   &__character {
-    margin: 0 5px;
+    width:150px;
+    display:inline-block;
+    margin: auto;
+    text-align: center;
     font-size: 340%;
   }
+
   &__button {
     display: none;
     border-radius: 2px;
@@ -22,13 +35,61 @@
     font-weight: bold;
     margin: 30px auto 0 auto;
     animation: fadeIn 2s ease;
+
     &:hover {
       cursor: pointer;
     }
+
   }
+
+  &__button2 {
+    width: 400px;
+    height: 90px;
+    font-size: 30px;
+    padding: 8px 15px;
+    background: #FCFCF7;
+    border: 3px solid #959595;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+
+    &__bottom{
+      z-index:-1;
+      margin-bottom: -101px;
+    }
+
+  }
+
   &__animation {
     opacity: 1;
     font-size: 300%;
     animation: fadeIn .7s ease-in;
   }
+
+}
+
+.animation{
+  background:black!important;
+  width:400px!important;
+  opacity: 1!important;
+  transition:width linear;
+}
+
+.tofu__button2__fill{
+  padding: 8px 15px;
+  background: #FCFCF7;
+  border-radius: 100px;
+  display: flex;
+  width:70px;
+  height: 90px;
+  margin-top: -90px;
+  opacity: 0;
+}
+
+.tofu__buttons{
+  display: none;
+  left: 35%;
+  position: absolute;
+  margin-top: 200px;
+  transition:display 1s ease;
 }
