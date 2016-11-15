@@ -5,11 +5,11 @@
   "author": "Léo Le Bras <leo.lebrasf@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/LeoLeBras/pibre/issues"
+    "url": "https://github.com/luknl/hetic-p2019-12-noto/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LeoLeBras/pibre.git"
+    "url": "https://github.com/luknl/hetic-p2019-12-noto.git"
   },
   "scripts": {
     "start": "gulp dev --watch",
@@ -26,6 +26,7 @@
     "babel-preset-stage-2": "^6.1.18",
     "browser-sync": "^2.10.0",
     "del": "^2.1.0",
+    "flow-bin": "v0.34.0",
     "gulp": "^3.8.11",
     "gulp-base64": "^0.1.2",
     "gulp-cached": "^1.1.0",
