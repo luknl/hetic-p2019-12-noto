@@ -1,95 +1,118 @@
 .tofu {
+  display: flex;
+  flex-direction: column;
   color: $grey;
+  width: 100vw;
+  height: 100vh;
 
   &__title {
     text-transform: uppercase;
-    margin-top: -200px;
     font-weight: bold;
     font-size: 150%;
-  }
+    width: 100vw;
+    flex: 0.33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  &__span {
-    position: absolute;
-    padding-top: 150px;
-    animation: blink 1s ease infinite;
+    h2 {
+     display:flex;
+     justify-content: center;
+    //  align-items: center;
+   }
+
   }
 
   &__input {
-    font-size: 300%;
-  }
-
-  &__character {
-    width:150px;
-    display:inline-block;
-    margin: auto;
-    text-align: center;
-    font-size: 340%;
-  }
-
-  &__button {
-    display: none;
-    border-radius: 2px;
-    border: 2px solid $grey;
-    padding: 8px 15px;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin: 30px auto 0 auto;
-    animation: fadeIn 2s ease;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-  }
-
-  &__button2 {
-    width: 400px;
-    height: 90px;
-    font-size: 30px;
-    padding: 8px 15px;
-    background: #FCFCF7;
-    border: 3px solid #959595;
-    border-radius: 100px;
     display: flex;
+    font-size: 300%;
+    width: 100vw;
+    flex: 0.33;
     justify-content: center;
+    align-items: center;
 
-    &__bottom{
-      z-index:-1;
-      margin-bottom: -101px;
+    &__typebar {
+      animation: blink 1s ease infinite;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__characters {
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 340%;
     }
 
   }
 
+  .tofu__spacebar {
+    display: none;
+    // display:flex;
+    transition: display 1s ease;
+    width: 100vw;
+    flex: 0.33;
+    justify-content: center;
+    align-items: center;
+
+    &__button {
+      width: 400px;
+      height: 90px;
+      font-size: 30px;
+      padding: 8px 15px;
+      background: $tofu-white;
+      border: 3px solid $grey;
+      border-radius: 100px;
+      justify-content: center;
+      position: absolute;
+      &--down::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        margin-top: 8px;
+        left: -1px;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        // background: trasnparent;
+        border: 3px solid $grey;
+        border-radius: 100px;
+        justify-content: center;
+
+      }
+
+      &_fill {
+        border-radius: 100px;
+        width: 70px;
+        // width: 400px;
+        // height: 90px;
+        height: 110px;
+        position:absolute;
+        left:calc(50% - 200px);
+        // opacity: 0;
+        z-index:0;
+        clip-path: ellipse(50% 23% at 50% 50%);
+      }
+
+    }
+
+  }
+
+  // character apparition animation
   &__animation {
     opacity: 1;
-    font-size: 300%;
+    font-size: 275%;
+    padding-top:20px;
     animation: fadeIn .7s ease-in;
   }
 
 }
 
-.animation{
-  background:black!important;
-  width:400px!important;
-  opacity: 1!important;
-  transition:width linear;
-}
-
-.tofu__button2__fill{
-  padding: 8px 15px;
-  background: #FCFCF7;
-  border-radius: 100px;
-  display: flex;
-  width:70px;
-  height: 90px;
-  margin-top: -90px;
-  opacity: 0;
-}
-
-.tofu__buttons{
-  display: none;
-  left: 35%;
-  position: absolute;
-  margin-top: 200px;
-  transition:display 1s ease;
+.fillAnimation{
+  background: black;
+  width: 400px !important;
+  opacity: 1 !important;
+  left:calc(50% - 200px)!important;
+  transition: width, left linear;
 }
