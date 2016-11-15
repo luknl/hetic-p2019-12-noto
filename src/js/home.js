@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     body.addEventListener('keyup', (e) => {
       if (e.keyCode === 32) {
         console.log('space up')
-        tofuSpaceBarDown.className += ' tofu__spacebar__button--down'
+        tofuSpaceBarDown.className = 'tofu__spacebar__button tofu__spacebar__button--down'
         tofuSpaceBarBtn.innerText = 'Press space to noto'
         tofuSpaceBarBtn.style.marginTop = '0px'
         tofuSpaceBarFill.className = 'tofu__spacebar__button_fill'

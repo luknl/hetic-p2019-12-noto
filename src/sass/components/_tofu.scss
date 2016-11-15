@@ -84,15 +84,15 @@
 
       &_fill {
         border-radius: 100px;
-        width: 70px;
-        // width: 400px;
-        // height: 90px;
-        height: 110px;
+        width: 400px;
+        // width: 70px;
+        height: 90px;
         position:absolute;
-        left:calc(50% - 200px);
-        // opacity: 0;
-        z-index:0;
-        clip-path: ellipse(50% 23% at 50% 50%);
+        // left:calc(50% - 400px);
+        opacity: 0;
+        background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
+        background-size:0px 90px;
+        z-index: 0;
       }
 
     }
@@ -110,9 +110,12 @@
 }
 
 .fillAnimation{
-  background: black;
-  width: 400px !important;
+  // background: black;
+  // width: 400px !important;
   opacity: 1 !important;
-  left:calc(50% - 200px)!important;
-  transition: width, left linear;
+  // left:calc(50% - 200px)!important;
+  margin-top:10px;
+  // transition: width, left linear;
+  transition: background-size linear;
+  background-size:400px 90px!important;
 }
