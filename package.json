@@ -16,8 +16,7 @@
     "start": "gulp dev --watch",
     "test": "gulpt -T --sorted",
     "build": "gulp build --prod",
-    "server": "nodemon server/index.js --exec babel-node",
-    "postinstall": "npm run prod-client"
+    "server": "nodemon server/index.js --exec babel-node"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
