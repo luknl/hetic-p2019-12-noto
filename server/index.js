@@ -1,6 +1,14 @@
-const app = require('express')()
+import express from 'express'
+import geoip from 'geoip-lite'
+import path from 'path'
+import cors from 'cors'
+
+const app = express()
 const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const port = process.env.PORT || 8080
+
+app.use(cors())
+app.use(express.static(__dirname + '/../__build__'))
 
 let allMessages = {
   mainRoom: [],
@@ -12,21 +20,13 @@ let allMessages = {
 }
 let clients = []
 
-// Desktop route
-app.get('/notoboard', function(req, res){
-  res.sendFile(__dirname + '/notoboard.html')
-})
+const io = require('socket.io')(http)
 
-// Mobile route
-app.get('/send/', function(req, res){
-  res.sendFile(__dirname + '/send.html')
-})
-
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
   io.emit('previous messages', allMessages.mainRoom)
   io.emit('previous rooms', { roomIds: Object.keys(allMessages)})
 
-  socket.on('chat message', function(data){
+  socket.on('chat message', (data) => {
     // Check if the message is for the mainRoom
     if (data.roomId == '') {
       // Send message to clients
@@ -34,6 +34,7 @@ io.on('connection', function(socket){
         msg: data.msg,
         roomId: data.roomId,
         roomName: data.roomName,
+        date: data.date,
       })
       allMessages.mainRoom.push({msg: data.msg})
     } else {
@@ -42,6 +43,7 @@ io.on('connection', function(socket){
         msg: data.msg,
         roomId: data.roomId,
         roomName: data.roomName,
+        date: data.date,
       })
       // Save the message to the good room
       allMessages[data.roomId].push({msg: data.msg})
@@ -49,7 +51,10 @@ io.on('connection', function(socket){
     console.log(allMessages[data.roomId])
   })
 
-  socket.on('new user', function(data){
+  socket.on('new user', (data) => {
+    console.log(socket.request.connection.remoteAddress)
+    // let geo = geoip.lookup(ip)
+    // console.log(geo.country)
     // Save the message
     clients.push({
       desktopSocketId: socket.id,
@@ -60,7 +65,7 @@ io.on('connection', function(socket){
     console.log('New user desktop user', data.urlId, 'in', data.currentRoom)
   })
 
-  socket.on('join room', function(data){
+  socket.on('join room', (data) => {
     // Create room if it doesn't exist
     if (!allMessages[data.roomId]) {
       allMessages[data.roomId] = []
@@ -72,32 +77,33 @@ io.on('connection', function(socket){
       io.to(data.roomId).emit('chat message', {
         msg: roomMessages.msg,
         roomId: data.roomId,
+        date: data.date,
       })
     })
     console.log(allMessages)
   })
 
   // Leave
-  socket.on('leave room', function(roomId){
+  socket.on('leave room', (roomId) => {
     socket.leave(roomId)
   })
 
   // Get user infos to the send page
-  socket.on('get user', function(data){
+  socket.on('get user', (data) => {
     // Get client infos thanks to urlId
-    const infos = clients.filter(function(el) {
+    const infos = clients.filter((el) => {
       return el.urlId == data.urlId
     })
     if (infos.length == 0) {
-      io.emit('user infos', 'Not a valid link')
+      io.to(socket.id).emit('user infos', 'Not a valid link')
     } else {
-      io.emit('user infos', infos)
+      io.to(socket.id).emit('user infos', infos)
       console.log('Mobile user linked to id', data.urlId )
     }
   })
 
   // Create new room from "send" client
-  socket.on('create room', function(data){
+  socket.on('create room', (data) => {
     // Create memory location where messages will be saved
     if (!allMessages[data.roomId]) {
       allMessages[data.roomId] = []
@@ -119,6 +125,6 @@ io.on('connection', function(socket){
 })
 
 
-http.listen(3000, function(){
-  console.log('listening on *:3000')
+http.listen(port, () => {
+  console.log('listening on ' + port)
 })

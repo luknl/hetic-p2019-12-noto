@@ -4,6 +4,7 @@
   "description": "Noto Font by Google | School Project",
   "author": "Léo Le Bras <leo.lebrasf@gmail.com>",
   "license": "MIT",
+  "main": "server/index.js",
   "bugs": {
     "url": "https://github.com/luknl/hetic-p2019-12-noto/issues"
   },
@@ -15,7 +16,8 @@
     "start": "gulp dev --watch",
     "test": "gulpt -T --sorted",
     "build": "gulp build --prod",
-    "server": "nodemon server/index.js --exec"
+    "server": "nodemon server/index.js --exec babel-node",
+    "postinstall": "npm run prod-client"
   },
   "devDependencies": {
     "autoprefixer": "^6.1.1",
@@ -58,7 +60,10 @@
   },
   "dependencies": {
     "babel-eslint": "^7.1.0",
+    "babel-node": "^6.5.2",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
+    "geoip-lite": "^1.1.8",
     "socket.io": "^1.5.1",
     "socket.io-client": "^1.5.1"
   }
