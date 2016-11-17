@@ -4,6 +4,7 @@
   "description": "Noto Font by Google | School Project",
   "author": "Léo Le Bras <leo.lebrasf@gmail.com>",
   "license": "MIT",
+  "main": "server/index.js",
   "bugs": {
     "url": "https://github.com/luknl/hetic-p2019-12-noto/issues"
   },
@@ -15,19 +16,27 @@
     "start": "gulp dev --watch",
     "test": "gulpt -T --sorted",
     "build": "gulp build --prod",
-    "server": "nodemon server/index.js --exec"
+    "server": "nodemon server/index.js --exec babel-node",
+    "postinstall": "npm run prod-client"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.9.1"
+  },
+  "dependencies": {
     "autoprefixer": "^6.1.1",
     "babel-core": "^6.2.1",
-    "babel-eslint": "^7.1.0",
     "babel-loader": "^6.2.0",
+    "babel-node": "^6.5.2",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-stage-2": "^6.1.18",
     "browser-sync": "^2.10.0",
+    "cors": "^2.8.1",
     "del": "^2.1.0",
-    "eslint": "^3.9.1",
+    "express": "^4.14.0",
     "flow-bin": "v0.34.0",
+    "geoip-lite": "^1.1.8",
     "gulp": "^3.8.11",
     "gulp-base64": "^0.1.2",
     "gulp-cached": "^1.1.0",
@@ -51,16 +60,11 @@
     "imagemin-pngquant": "^4.0.0",
     "postcss-font-magician": "^1.4.0",
     "run-sequence": "^1.1.5",
+    "socket.io": "^1.5.1",
+    "socket.io-client": "^1.5.1",
     "vinyl-named": "^1.1.0",
     "webpack": "^1.12.9",
     "webpack-stream": "^3.1.0",
     "yargs": "^3.31.0"
-  },
-  "dependencies": {
-    "babel-eslint": "^7.1.0",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "express": "^4.14.0",
-    "socket.io": "^1.5.1",
-    "socket.io-client": "^1.5.1"
   }
 }
