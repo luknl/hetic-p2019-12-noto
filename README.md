@@ -1,6 +1,8 @@
 # Noto
 :100: Noto Font by Google | School Project
 
+[![Build Status](https://travis-ci.org/luknl/hetic-p2019-12-noto.svg?branch=master)](https://travis-ci.org/luknl/hetic-p2019-12-noto)
+
 ## Requirements
 - Node.js `5.0 or newer`
 
@@ -16,6 +18,12 @@
 ## Getting started
 
 ### Install
+
+Install Yarn package manager:
+
+```
+$ npm i -g yarn
+```
 
 Just clone the repo and start :
 
