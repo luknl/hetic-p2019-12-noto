@@ -1,6 +1,5 @@
 import express from 'express'
-import geoip from 'geoip-lite'
-import path from 'path'
+// import geoip from 'geoip-lite'
 import cors from 'cors'
 
 const app = express()
@@ -14,7 +13,8 @@ let allMessages = {
   mainRoom: [],
   room1: [
     {
-      msg: 'First message, hard written'
+      msg: 'First message, hard written',
+      date: '2016-11-17T15:21:18.087Z',
     }
   ],
 }
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
         roomName: data.roomName,
         date: data.date,
       })
-      allMessages.mainRoom.push({msg: data.msg})
+      allMessages.mainRoom.push({msg: data.msg, date: data.date})
     } else {
       // Send message to clients
       io.to(data.roomId).emit('chat message', {
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
         date: data.date,
       })
       // Save the message to the good room
-      allMessages[data.roomId].push({msg: data.msg})
+      allMessages[data.roomId].push({msg: data.msg, date: data.date,})
     }
     console.log(allMessages[data.roomId])
   })
@@ -60,9 +60,13 @@ io.on('connection', (socket) => {
       desktopSocketId: socket.id,
       urlId: data.urlId,
       currentRoom: data.currentRoom,
-      time: Date.now(),
     })
     console.log('New user desktop user', data.urlId, 'in', data.currentRoom)
+  })
+
+  // Leave
+  socket.on('leave room', (roomId) => {
+    socket.leave(roomId)
   })
 
   socket.on('join room', (data) => {
@@ -71,22 +75,18 @@ io.on('connection', (socket) => {
       allMessages[data.roomId] = []
     }
     socket.join(data.roomId)
+    io.to(data.desktopSocketId).emit('change room', {roomId: data.roomId})
     // Send all previous messages
     allMessages[data.roomId].map((roomMessages) => {
-      io.to(data.desktopSocketId).emit('change room', {roomId: data.roomId})
       io.to(data.roomId).emit('chat message', {
-        msg: roomMessages.msg,
-        roomId: data.roomId,
-        date: data.date,
+        msg:     roomMessages.msg,
+        roomId:  data.roomId,
+        date:    data.date,
       })
     })
-    console.log(allMessages)
+    console.log('allMessages', allMessages)
   })
 
-  // Leave
-  socket.on('leave room', (roomId) => {
-    socket.leave(roomId)
-  })
 
   // Get user infos to the send page
   socket.on('get user', (data) => {
@@ -120,7 +120,6 @@ io.on('connection', (socket) => {
       roomId: data.roomId,
       roomName: data.roomName,
     })
-    console.log(allMessages)
   })
 })
 

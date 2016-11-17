@@ -1,7 +1,7 @@
 .rooms {
   display: flex;
   flex-direction: row;
-  &-item {
+  &__single {
     min-width: 100px;
     min-height: 100px;
     border-radius: 50%;
