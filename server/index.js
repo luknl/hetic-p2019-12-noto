@@ -12,19 +12,22 @@ let allMessages = {
 }
 let clients = []
 
+// Desktop route
 app.get('/notoboard', function(req, res){
   res.sendFile(__dirname + '/notoboard.html')
 })
 
-app.get('/send/:idSender', function(req, res){
+// Mobile route
+app.get('/send/', function(req, res){
   res.sendFile(__dirname + '/send.html')
 })
 
 io.on('connection', function(socket){
   io.emit('previous messages', allMessages.mainRoom)
-  io.emit('previous rooms', Object.keys(allMessages))
+  io.emit('previous rooms', { roomIds: Object.keys(allMessages)})
 
   socket.on('chat message', function(data){
+    // Check if the message is for the mainRoom
     if (data.roomId == '') {
       // Send message to clients
       io.emit('chat message', {
@@ -32,44 +35,45 @@ io.on('connection', function(socket){
         roomId: data.roomId,
         roomName: data.roomName,
       })
+      allMessages.mainRoom.push({msg: data.msg})
     } else {
       // Send message to clients
-      io.sockets.in(data.roomId).emit('chat message', {
+      io.to(data.roomId).emit('chat message', {
         msg: data.msg,
         roomId: data.roomId,
         roomName: data.roomName,
       })
-    }
-    // Check if the message is for the mainRoom
-    if (data.roomId == '') {
-      allMessages.mainRoom.push({msg: data.msg})
-    } else {
       // Save the message to the good room
       allMessages[data.roomId].push({msg: data.msg})
     }
-    console.log(allMessages)
+    console.log(allMessages[data.roomId])
   })
 
-  socket.on('new user', function(urlId){
+  socket.on('new user', function(data){
     // Save the message
     clients.push({
-      socketId: socket.id,
-      urlId: urlId,
+      desktopSocketId: socket.id,
+      urlId: data.urlId,
+      currentRoom: data.currentRoom,
       time: Date.now(),
     })
+    console.log('New user desktop user', data.urlId, 'in', data.currentRoom)
   })
 
-  socket.on('join room', function(roomId){
-    if (!allMessages[roomId]) {
-      allMessages[roomId] = []
+  socket.on('join room', function(data){
+    // Create room if it doesn't exist
+    if (!allMessages[data.roomId]) {
+      allMessages[data.roomId] = []
     }
-    socket.join(roomId)
-    io.sockets.in(roomId).emit('chat message', {
-      msg: 'what\'s up bitches? ' + roomId,
-      roomId,
+    socket.join(data.roomId)
+    // Send all previous messages
+    allMessages[data.roomId].map((roomMessages) => {
+      io.to(data.desktopSocketId).emit('change room', {roomId: data.roomId})
+      io.to(data.roomId).emit('chat message', {
+        msg: roomMessages.msg,
+        roomId: data.roomId,
+      })
     })
-    // This will be deleted
-    allMessages[roomId].push({msg: 'what\'s up bitches? ' + roomId})
     console.log(allMessages)
   })
 
@@ -78,16 +82,17 @@ io.on('connection', function(socket){
     socket.leave(roomId)
   })
 
-
   // Get user infos to the send page
-  socket.on('get user', function(urlId){
+  socket.on('get user', function(data){
+    // Get client infos thanks to urlId
     const infos = clients.filter(function(el) {
-      return el.urlId == urlId
+      return el.urlId == data.urlId
     })
     if (infos.length == 0) {
       io.emit('user infos', 'Not a valid link')
     } else {
       io.emit('user infos', infos)
+      console.log('Mobile user linked to id', data.urlId )
     }
   })
 
@@ -98,22 +103,18 @@ io.on('connection', function(socket){
       allMessages[data.roomId] = []
     }
     socket.join(data.roomId)
-    io.sockets.in(data.roomId).emit('chat message', {
+    io.to(data.roomId).emit('chat message', {
       roomId: data.roomId,
       roomName: data.roomName,
       msg: 'This is a message to ' + data.roomId,
     })
 
-    // Create the div for other to join
+    // Give notoboard the infos to create a room for other to join
     io.emit('add room', {
       roomId: data.roomId,
       roomName: data.roomName,
     })
     console.log(allMessages)
-  })
-
-  socket.on('disconnect', function(){
-    console.log('user disconnected')
   })
 })
 

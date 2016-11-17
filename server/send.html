@@ -5,71 +5,115 @@
     <title>Notoboard</title>
     <style>
       form input { border: 1px solid black; padding: 10px; margin-right: .5%; width: 100%;}
+      .rooms { display: flex; flex-direction: row; overflow-x: scroll;}
+      .rooms-item { min-width: 100px; min-height: 100px; border-radius: 50%; background-color: grey; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;}
       .messages { list-style-type: none; }
+      .code { position: fixed; background-color: lightblue; max-width: 40rem; margin: 1rem; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 5rem;}
+      .code__error { color: red;}
     </style>
   </head>
-
+  <div class="rooms"></div>
   <body>
-    <form action="" class="message-form">
-      <label for="message-form-input">Send Message</label>
-      <input id="message-form-input" class="input" autocomplete="off" /><button>Send</button>
+    <div class="code">
+      <form class="code__form" action="">
+        <label for="code__input">What's your code?</label>
+        <h3>Noto<strong>Space</strong></h3>
+        <input id="code__input" type="number" class="input" autocomplete="off" />
+        <div class="code__error"></div>
+        <button>Ok</button>
+      </form>
+    </div>
+    <form action="" class="message__form">
+      <label for="message__form-input">Send Message</label>
+      <input id="message__form-input" class="input" autocomplete="off" /><button>Send</button>
     </form>
-    <form action="" class="room-form">
-      <label for="room-form-input">Create Room</label>
-      <input id="room-form-input" class="input" autocomplete="off" /><button>Send</button>
+    <form action="" class="room__form">
+      <label for="room__form-input">Create Room</label>
+      <input id="room__form-input" class="input" autocomplete="off" /><button>Send</button>
     </form>
     <ul class="infos"></ul>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
-      var $messageForm = document.querySelector('.message-form')
-      var $roomForm = document.querySelector('.room-form')
-      var $infosList = document.querySelector('.infos')
-      let socketId = ''
+      const $messageForm = document.querySelector('.message__form')
+      const $roomForm = document.querySelector('.room__form')
+      const $codeForm = document.querySelector('.code__form')
+      const $infosList = document.querySelector('.infos')
+      const $rooms = document.querySelector('.rooms')
+      let desktopSocketId = ''
       let urlId = ''
-      let roomId = ''
+      var stateRoomId = ''
+      let roomsList = []
 
-      // Send messafe form
+
+      // Add previous rooms to the DOM
+      socket.on('previous rooms', (data) => {
+        $rooms.innerHTML = data.roomIds.map((roomId) => `
+          <div id="${roomId}" class="rooms-item" onClick="join_room(this.id)">${roomId}</div>
+        `).join('')
+        data.roomIds.map((roomId) => {
+          roomsList.push(roomId)
+        })
+      })
+
+      // Join room
+      function join_room(roomId){
+        roomsList.forEach(function(room){
+          socket.emit('leave room', room)
+        })
+        // Change roomId state
+        stateRoomId = roomId
+        console.log(roomId);
+        socket.emit('join room', {roomId, desktopSocketId})
+        roomsList.push(roomId)
+      }
+
+      // Send message form
       $messageForm.addEventListener("submit", function(event){
         event.preventDefault();
+        console.log('Sendind message to room:', stateRoomId);
         // Send message to sever
         socket.emit('chat message', {
-          roomId: roomId,
-          msg: document.querySelector("#message-form-input").value
+          roomId: stateRoomId,
+          msg: document.querySelector("#message__form-input").value
         });
         // Reset input
-        document.querySelector(".input").value = "";
+        document.querySelector("#message__form-input").value = "";
         return false;
       });
 
       // Add room form
       $roomForm.addEventListener("submit", function(event){
         event.preventDefault();
-        roomId = document.querySelector("#room-form-input").value.replace(/[^A-Z0-9]/ig, "_")
+        stateRoomId = document.querySelector("#room__form-input").value.replace(/[^A-Z0-9]/ig, "_")
         // Query room creation
         socket.emit('create room', {
-          roomName: document.querySelector("#room-form-input").value,
-          roomId,
-          socketId,
+          roomName: document.querySelector("#room__form-input").value,
+          roomId: stateRoomId,
+          desktopSocketId,
           urlId,
         });
         // Reset input
-        document.querySelector("#room-form-input").value = ""
+        document.querySelector("#room__form-input").value = ""
         return false
       })
 
-      // Get user infos
-      socket.emit('get user', window.location.href.substr(window.location.href.lastIndexOf('/') + 1));
+      $codeForm.addEventListener("submit", function(event){
+        event.preventDefault();
+        //  Send infos
+        socket.emit('get user', { urlId: document.getElementById('code__input').value });
+      })
 
-      // Use user infos
+      // Get user infos
       socket.on('user infos', function(infos){
         if (typeof infos == 'string') {
-          $infosList.innerHTML += `<li>${infos}</li>`
+          document.querySelector('.code__error').innerHTML = `${infos}`
         } else {
-          socketId = infos[0].socketId
+          document.querySelector('.code').style.display = "none";
+          desktopSocketId = infos[0].desktopSocketId
           urlId = infos[0].urlId
           $infosList.innerHTML += `
-          <li>Socket ID: ${infos[0].socketId}</li>
+          <li>Desktop Socket ID: ${infos[0].desktopSocketId}</li>
           <li>urlId: ${infos[0].urlId}</li>
           <li>Time: ${infos[0].time}</li>
           `
