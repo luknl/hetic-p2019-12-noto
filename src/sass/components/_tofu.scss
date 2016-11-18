@@ -1,122 +1,122 @@
 .tofu {
   display: flex;
   flex-direction: column;
-  color: $grey;
   width: 100vw;
   height: 100vh;
+  color: $grey;
 
   &__title {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 150%;
-    width: 100vw;
-    flex: 0.33;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 0.33;
+    width: 100vw;
+    font-size: 150%;
+    font-weight: bold;
+    text-transform: uppercase;
 
     h2 {
-     display:flex;
+     display: flex;
      justify-content: center;
-    //  align-items: center;
    }
 
   }
 
+  // input where characters are typed
   &__input {
     display: flex;
-    font-size: 300%;
-    width: 100vw;
-    flex: 0.33;
     justify-content: center;
     align-items: center;
+    flex: 0.33;
+    width: 100vw;
+    font-size: 300%;
 
     &__typebar {
-      animation: blink 1s ease infinite;
       justify-content: center;
       align-items: center;
+      animation: blink 1s ease infinite;
     }
 
     &__characters {
-      width: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 150px;
       font-size: 340%;
     }
 
   }
 
+  // space bar
   .tofu__spacebar {
     display: none;
-    // display:flex;
-    transition: display 1s ease;
-    width: 100vw;
-    flex: 0.33;
     justify-content: center;
     align-items: center;
+    flex: 0.33;
+    width: 100vw;
+    transition: display 1s ease;
 
     &__button {
-      width: 400px;
-      height: 90px;
-      font-size: 30px;
-      padding: 8px 15px;
       background: $tofu-white;
       border: 3px solid $grey;
       border-radius: 100px;
       justify-content: center;
       position: absolute;
+      padding: 8px 15px;
+      width: 400px;
+      height: 90px;
+      font-size: 30px;
+
       &--down::before {
-        content: "";
         position: absolute;
         z-index: -1;
-        margin-top: 8px;
-        left: -1px;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        justify-content: center;
         border: 3px solid $grey;
         border-radius: 100px;
-        justify-content: center;
+        left: -1px;
+        top: 0;
+        margin-top: 8px;
+        width: 100%;
+        height: 100%;
+        content: "";
 
       }
 
       &_fill {
-        border-radius: 100px;
-        width: 400px;
-        // width: 70px;
-        height: 90px;
-        position:absolute;
-        // left:calc(50% - 400px);
-        background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
-        background-size:0px 90px;
-        // background-size:400px 90px!important;
-        opacity: .7;
+        position: absolute;
         z-index: 0;
+        background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
+        background-size: 0px 90px;
+        border-radius: 100px;
+        opacity: .7;
+        width: 400px;
+        height: 90px;
       }
 
     }
 
     &__circle {
-      position:absolute;
-      display:none;
+      display: none;
+      position: absolute;
     }
 
   }
 
   // character apparition animation
   &__animation {
-    font-size: 275%;
     padding-top:20px;
+    font-size: 275%;
     animation: fadeIn .7s ease-in;
   }
 
 }
 
+// transitions //
+
 .fillAnimation{
   margin-top:10px;
-  transition: background-size linear;
   background-size:400px 90px!important;
+  transition: background-size linear;
 }
 
 .circleGrowth {

@@ -3,23 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
         tofuTitle   = document.querySelector('.tofu__title h2'),
         tofuInput   = document.querySelector('.tofu__input'),
         tofuTypeBar    = document.querySelector('.tofu__input__typebar'),
-        tofuSpaceBar  = document.querySelector('.tofu__spacebar'),
-        tofuSpaceBarBtn  = document.querySelector('.tofu__spacebar__button'),
-        tofuSpaceBarDown  = document.querySelector('.tofu__spacebar__button--down'),
-        tofuSpaceBarFill  = document.querySelector('.tofu__spacebar__button_fill'),
-        tofuSpaceBarCircle  = document.querySelector('.tofu__spacebar__circle'),
-        svgCircle  = document.querySelector('animateTransform'),
+        tofuSpaceBar   = document.querySelector('.tofu__spacebar'),
+        tofuSpaceBarBtn    = document.querySelector('.tofu__spacebar__button'),
+        tofuSpaceBarDown   = document.querySelector('.tofu__spacebar__button--down'),
+        tofuSpaceBarFill   = document.querySelector('.tofu__spacebar__button_fill'),
+        tofuSpaceBarCircle = document.querySelector('.tofu__spacebar__circle'),
+        svgCircle   = document.querySelector('animateTransform'),
         tofu        = [],
-        word       = []
-  // incrementator for each character
-  let i        = 0,
-  // check if all characters have been revealed
-      revealed = false
+        word        = []
+  let i        = 0, // incrementator for each character
+      revealed = false // check if all characters have been revealed
 
   // when user starts typing
   body.addEventListener('keyup', (e) => {
     // user is only allowed to type letters
-    if (e.keyCode >= 65 && e.keyCode <= 90){
+    if (e.keyCode >= 65 && e.keyCode <= 90) {
       // remove type bar and add bottom space bar
       tofuTypeBar.style.display   = 'none'
       tofuSpaceBar.style.display = 'flex'
@@ -33,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       i++
     }
     // if backspace, then remove last value of array and last tofu
-    else if (e.keyCode === 8){
+    else if (e.keyCode === 8) {
       tofu.pop()
       word.pop()
       tofuInput.innerHTML = tofu.join('')
@@ -53,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const characters = document.querySelector(`.tofu__input__character__${i}`)
           setTimeout(() => {
             characters.innerHTML = word[i]
-            // add class to animte tofu to character transformation
+            // add class to animte the transformation from tofu to character
             characters.className += ` tofu__animation`
           }, i * 400)
         }
@@ -77,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('space up')
 
         // if all all letters have been revealed
-        if(revealed){
+        if(revealed) {
           console.log('revealed');
           // function to animate a growing circle in svg
           circleGrowth()
@@ -92,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  // Functions
+  // Functions //
 
-  function circleGrowth(){
+  function circleGrowth() {
     body.style.overflow = 'hidden'
     tofuSpaceBarBtn.innerText = 'ta-dah! now release.'
     tofuSpaceBarCircle.style.display = 'block'
-    // launch animation
+    // launch svg animation
     svgCircle.beginElement()
     tofuInput.innerHTML = ''
   }
