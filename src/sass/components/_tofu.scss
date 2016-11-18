@@ -75,7 +75,6 @@
         top: 0;
         width: 100%;
         height: 100%;
-        // background: trasnparent;
         border: 3px solid $grey;
         border-radius: 100px;
         justify-content: center;
@@ -89,19 +88,24 @@
         height: 90px;
         position:absolute;
         // left:calc(50% - 400px);
-        opacity: 0;
         background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
         background-size:0px 90px;
+        // background-size:400px 90px!important;
+        opacity: .7;
         z-index: 0;
       }
 
+    }
+
+    &__circle {
+      position:absolute;
+      display:none;
     }
 
   }
 
   // character apparition animation
   &__animation {
-    opacity: 1;
     font-size: 275%;
     padding-top:20px;
     animation: fadeIn .7s ease-in;
@@ -110,12 +114,11 @@
 }
 
 .fillAnimation{
-  // background: black;
-  // width: 400px !important;
-  opacity: 1 !important;
-  // left:calc(50% - 200px)!important;
   margin-top:10px;
-  // transition: width, left linear;
   transition: background-size linear;
   background-size:400px 90px!important;
+}
+
+.circleGrowth {
+  transition: all 2s ease;
 }

@@ -9,9 +9,17 @@
   <div class="tofu__input">
     <span class="tofu__input__typebar">|</span>
   </div>
-  <div class="tofu__spacebar" id="myClip">
+  <div class="tofu__spacebar">
     <button type="button" name="button" class="tofu__spacebar__button tofu__spacebar__button--down"></button>
     <button type="button" name="button" class="tofu__spacebar__button_fill"></button>
+    <svg width="3500" height="3500" class="tofu__spacebar__circle">
+      <g transform="translate(1750,1640)">
+        <g>
+          <path d="M 0 -150 a 200 200 0 1 0 0.00001 0" fill="#272727" linejoin="round"></path>
+          <animateTransform attributeType="xml" begin="indefinite" id="pause" attributeName="transform" type="scale" from="0" to="7" dur=".8s" fill="freeze"/>
+        </g>
+      </g>
+    </svg>
   </div>
 </section>
 {% endblock %}
