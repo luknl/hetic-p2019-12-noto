@@ -138,9 +138,13 @@ gulp.task('js', () => (
         modulesDirectories: [
           'node_modules',
           'src/js/',
-          'src/js/vendors',
-          'src/js/utils'
-        ]
+        ],
+        alias: {
+          '@vendors': path.resolve(__dirname, 'src/js/vendors'),
+          '@helpers': path.resolve(__dirname, 'src/js/helpers'),
+          '@modules': path.resolve(__dirname, 'src/js/modules'),
+          '@utils': path.resolve(__dirname, 'src/js/utils'),
+        },
       },
       module: {
         loaders: [{

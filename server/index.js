@@ -9,11 +9,11 @@ const port = process.env.PORT || 8080
 app.use(cors())
 app.use(express.static(__dirname + '/../__build__'))
 
-let allMessages = {
+let messages = {
   mainRoom: [],
   room1: [
     {
-      msg: 'First message, hard written',
+      message: 'First message, hard written',
       date: '2016-11-17T15:21:18.087Z',
     }
   ],
@@ -22,34 +22,56 @@ let clients = []
 
 const io = require('socket.io')(http)
 
-io.on('connection', (socket) => {
-  io.emit('previous messages', allMessages.mainRoom)
-  io.emit('previous rooms', { roomIds: Object.keys(allMessages)})
+const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES'
 
-  socket.on('chat message', (data) => {
-    // Check if the message is for the mainRoom
-    if (data.roomId == '') {
-      // Send message to clients
-      io.emit('chat message', {
-        msg: data.msg,
-        roomId: data.roomId,
-        roomName: data.roomName,
-        date: data.date,
-      })
-      allMessages.mainRoom.push({msg: data.msg, date: data.date})
-    } else {
-      // Send message to clients
-      io.to(data.roomId).emit('chat message', {
-        msg: data.msg,
-        roomId: data.roomId,
-        roomName: data.roomName,
-        date: data.date,
-      })
-      // Save the message to the good room
-      allMessages[data.roomId].push({msg: data.msg, date: data.date,})
-    }
-    console.log(allMessages[data.roomId])
+io.on('connection', (socket) => {
+
+  io.emit('dispatch', {
+    type: GET_ALL_MESSAGES,
+    payload: {
+      messages: messages.mainRoom,
+    },
   })
+
+  io.emit('previous rooms', { roomIds: Object.keys(messages)})
+
+
+  const SEND_MESSAGE = 'SEND_MESSAGE'
+
+
+
+
+  // @TODO use watch helper
+  socket.on('dispatch', ({ type, payload }) => {
+    switch (type) {
+
+      // @TODO user dispath helper with actionCreators
+      case SEND_MESSAGE: {
+        const { message  } = payload
+        const { roomId } =  message
+        if (roomId === -1) {
+          io.emit('dispatch', {
+            type: SEND_MESSAGE,
+            payload,
+          })
+          messages.mainRoom.push(message)
+        } else {
+          io.to(roomId).emit('dispatch', {
+            type: SEND_MESSAGE,
+            payload,
+          })
+          messages[roomId].push(message)
+        }
+        break
+      }
+
+    }
+  })
+
+
+
+
+
 
   socket.on('new user', (data) => {
     console.log(socket.request.connection.remoteAddress)
@@ -65,26 +87,26 @@ io.on('connection', (socket) => {
   })
 
   // Leave
-  socket.on('leave room', (roomId) => {
+  socket.on('LEAVE_ROOM', (roomId) => {
     socket.leave(roomId)
   })
 
-  socket.on('join room', (data) => {
+  socket.on('JOIN_ROOM', (data) => {
     // Create room if it doesn't exist
-    if (!allMessages[data.roomId]) {
-      allMessages[data.roomId] = []
+    if (!messages[data.roomId]) {
+      messages[data.roomId] = []
     }
     socket.join(data.roomId)
-    io.to(data.desktopSocketId).emit('change room', {roomId: data.roomId})
+    io.to(data.desktopSocketId).emit('CHANGE_ROOM', {roomId: data.roomId})
     // Send all previous messages
-    allMessages[data.roomId].map((roomMessages) => {
+    messages[data.roomId].map((roomMessages) => {
       io.to(data.roomId).emit('chat message', {
-        msg:     roomMessages.msg,
+        message:     roomMessages.message,
         roomId:  data.roomId,
         date:    data.date,
       })
     })
-    console.log('allMessages', allMessages)
+    console.log('messages', messages)
   })
 
 
@@ -105,14 +127,14 @@ io.on('connection', (socket) => {
   // Create new room from "send" client
   socket.on('create room', (data) => {
     // Create memory location where messages will be saved
-    if (!allMessages[data.roomId]) {
-      allMessages[data.roomId] = []
+    if (!messages[data.roomId]) {
+      messages[data.roomId] = []
     }
     socket.join(data.roomId)
     io.to(data.roomId).emit('chat message', {
       roomId: data.roomId,
       roomName: data.roomName,
-      msg: 'This is a message to ' + data.roomId,
+      message: 'This is a message to ' + data.roomId,
     })
 
     // Give notoboard the infos to create a room for other to join

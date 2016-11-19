@@ -1,5 +1,3 @@
-import 'vendors/classList-polyfill.js'
-
 /**
  * Select a DOM element
  *
