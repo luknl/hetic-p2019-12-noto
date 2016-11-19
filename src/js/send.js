@@ -1,13 +1,65 @@
-const socket = io()
-const $messageForm = document.querySelector('.message__form')
-const $roomForm = document.querySelector('.room__form')
-const $codeForm = document.querySelector('.code__form')
-const $infosList = document.querySelector('.infos')
-const $rooms = document.querySelector('.rooms')
+/* @flow */
+
+import io from 'socket.io-client'
+import { dispatch, watch } from '@helpers/socket'
+import { sendMessage } from './bundles/notoSpace/actions'
+
+// Initialyze sockets
+const socket = io('http://localhost:8080')
+
+// Select DOM elements
+const $messageForm: HTMLElement = document.querySelector('.message__form')
+const $messageInput: HTMLInputElement = document.querySelector('.message__form__input')
+const $roomForm: HTMLElement = document.querySelector('.room__form')
+const $codeForm: HTMLElement = document.querySelector('.code__form')
+const $infosList: HTMLElement = document.querySelector('.infos')
+const $rooms: HTMLElement = document.querySelector('.rooms')
+
+
 let desktopSocketId = ''
 let urlId = ''
 let stateRoomId = ''
 let roomsList = []
+
+
+
+// Set initial state
+type State = { roomId: number }
+const state: State = {
+  roomId: -1,
+}
+
+// A user clicks to send a message
+$messageForm.addEventListener('submit', (e: Event): boolean => {
+  e.preventDefault()
+  const { value } = $messageInput
+  const { roomId } = state
+  const message = { value, roomId, createAt: new Date() }
+  dispatch(sendMessage(message))(socket)
+  $messageInput.value = ''
+  return false
+})
+
+// Listen socket events
+watch(({ type, payload }) => {
+  console.log(type, payload)
+  switch (type) {
+    default:
+  }
+})(socket)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add previous rooms to the DOM
 socket.on('previous rooms', (data) => {
@@ -32,20 +84,6 @@ $rooms.addEventListener('click', (event) => {
   roomsList.push(roomId)
 })
 
-// Send message form
-$messageForm.addEventListener('submit', (event) => {
-  event.preventDefault()
-  console.log('Sending message to room:', stateRoomId)
-  // Send message to sever
-  socket.emit('chat message', {
-    roomId: stateRoomId,
-    msg: document.querySelector('#message__form-input').value,
-    date: new Date(),
-  })
-  // Reset input
-  document.querySelector('#message__form-input').value = ''
-  return false
-})
 
 // Add room form
 $roomForm.addEventListener('submit', (event) => {

@@ -1,13 +1,18 @@
 /**
- * XMLHttpRequest micro library
- *
- * @param {string} url
- * @param {string} method
- * @param {object} body
- * @param {object} headers
- * @return {object}
+ * XMLHttpRequest micro helper
+ * @flow
  */
-const fetch = (url, { method = 'GET', body = null, headers = {} } = {} ) => {
+
+type Options = {
+  method?: 'GET' | 'POST',
+  body?: any,
+  headers?: Object,
+}
+
+export default function fetch(
+  url: string,
+  { method = 'GET', body = null, headers = {} }: Options = {}
+): Promise<any> {
   const xhr = new XMLHttpRequest()
   return new Promise((resolve) => {
     xhr.open(method, url, true)
@@ -22,5 +27,3 @@ const fetch = (url, { method = 'GET', body = null, headers = {} } = {} ) => {
     xhr.send(body)
   })
 }
-
-export default fetch

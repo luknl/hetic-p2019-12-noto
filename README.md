@@ -27,7 +27,7 @@ $ yarn                          # Install Node.js components listed in ./package
 ```
 Think to install gulp in global on your desktop : `yarn global add gulp`, if this has not been done before.
 
-#### Getting started
+### Getting started
 
 ```shell
 $ yarn start
