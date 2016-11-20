@@ -8,7 +8,7 @@ import type { User, Room } from '@shared/modules/notoSpace/types'
 import { SOCKET_URL } from '@shared/config'
 
 // Initialyze sockets
-const socket = io(SCOKET_URL)
+const socket = io(SOCKET_URL)
 
 // Get actions and actionTypes
 const { joinRoom, generateUser, ...actionTypes } = actions
