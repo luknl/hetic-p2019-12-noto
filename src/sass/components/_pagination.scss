@@ -7,7 +7,7 @@
   width: 100vw;
   height: 3.75rem;
   background: red;
-  @include respond-to(31.25rem) {
+  @include respond-to(37.5rem) {
     width: 3.25rem;
     height: 49.565rem;
     background: #273442;

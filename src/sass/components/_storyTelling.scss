@@ -9,7 +9,7 @@
   width: 100vw;
   top: 6.25rem;
   background: radial-gradient(circle, #2A2A2A 0%, #07182C 100%);
-  @include respond-to(31.25rem){
+  @include respond-to(37.5rem){
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -30,7 +30,7 @@
     align-content: space-around;
     padding-top: 5rem;
     width: 100vw;
-    @include respond-to(31.25rem){
+    @include respond-to(600px){
       flex-direction: row;
       justify-content: center;
     }
@@ -62,12 +62,32 @@
     font-style: italic;
   }
   &__figure {
-    &--historic {
-      img::nth(1) {
+    &--history {
+      p:nth-child(1) {
+        position: absolute;
+        top: 27.5625rem;
+        left: 3.75rem;
+        z-index: 1;
+        font-size: 40px;
+        font-size: 2.5rem;
+        color: #FFFFFF;
 
       }
-      img::nth(2) {
 
+      img:nth-child(2) {
+        position: absolute;
+        top: 29.0625rem;
+        left: 7.8125rem;
+        width: 292px;
+        height: 239px;
+      }
+
+      img:nth-child(3) {
+        position: absolute;
+        top: 28rem;
+        left: 2.4375rem;
+        width: 138px;
+        height: 173px;
       }
     }
   }
