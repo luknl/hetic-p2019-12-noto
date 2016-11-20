@@ -11,9 +11,9 @@
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
   @include respond-to(43.75rem) { // 700px
     flex-direction: row;
-    &__header {
+    &__logo {
       position: relative;
-      top: -.0625rem;
+      top: .0625rem;
     }
   }
 }
