@@ -32,23 +32,32 @@
     width: 100vw;
     @include respond-to(600px){
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-start;
     }
   }
   &__content {
     width: 85vw;
+    @include respond-to(37.5rem) {
+      width: 60vw;
+      padding-left: 5rem;
+    }
+    @include respond-to(60.625rem) {
+      width: 55vw;
+      padding-left: 12.5rem;
+    }
+
   }
   &__title {
     font-family: 'Noto Serif';
     text-transform: uppercase;
-    font-size: 30px;
-    line-height: 41px;
-    letter-spacing: 7px;
+    font-size: 1.875rem;
+    line-height: 2.5625rem;
+    letter-spacing: 0.4375rem;
     color: #FFFFFF;
-    text-shadow: 0 0 8px 0 rgba(255,255,255,0.38);
+    text-shadow: 0 0 0.5rem 0 rgba(255,255,255,0.38);
   }
   &__text {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 33px;
     color: #FFFFFF;
     text-shadow: 0 1px 0 0 rgba(0,0,0,0.56);
@@ -61,33 +70,102 @@
   &__italic {
     font-style: italic;
   }
+
+  &__hiddingOnMobile{
+    display: none;
+    @include respond-to(37.5rem) {
+      display: block;
+    }
+  }
+
+  &__hiddingOnDesktop{
+    display: block;;
+    @include respond-to(37.5rem) {
+      display: none;
+    }
+  }
+
   &__figure {
     &--history {
       p:nth-child(1) {
         position: absolute;
         top: 27.5625rem;
         left: 3.75rem;
-        z-index: 1;
+        z-index: 2;
         font-size: 40px;
+        line-height: 3.9375rem;
         font-size: 2.5rem;
         color: #FFFFFF;
-
+        @include respond-to(37.5rem) {
+          font-size: 6rem;
+          left: 22.75rem;
+          top: 21.5rem;
+        }
+        @include respond-to(60.625rem) {
+          font-size: 11.25rem;
+          left: 34.75rem;
+          top: 21.5rem;
+        }
       }
 
-      img:nth-child(2) {
+      div:nth-child(2) {
         position: absolute;
-        top: 29.0625rem;
-        left: 7.8125rem;
-        width: 292px;
-        height: 239px;
+        z-index: 1;
+        left: 79px;
+        top: 504.5px;
+        width: 8.3125rem;
+        height: 3.21875rem;
+        background-color: #C29102;
+        opacity: .7;
+        @include respond-to(37.5rem) {
+          left: 24.0625rem;
+          top: 17.4375rem;
+          width: 23.1875rem;
+          height: 8.75rem;
+          opacity: .7;
+        }
+        @include respond-to(60.625rem) {
+          left: 38.0625rem;
+          top: 18.4375rem;
+          width: 19rem;
+          height: 140px;
+          opacity: .7;
+        }
       }
 
       img:nth-child(3) {
         position: absolute;
+        top: 29.0625rem;
+        left: 7.8125rem;
+        width: 70%;
+        height: auto;
+        @include respond-to(37.5rem){
+          top: 11.5625rem;
+          left: 500px;
+          max-width: 40%;
+        }
+        @include respond-to(60.625rem) {
+          top: 11.5625rem;
+          left: 864px;
+        }
+      }
+
+      img:nth-child(4) {
+        position: absolute;
         top: 28rem;
         left: 2.4375rem;
-        width: 138px;
-        height: 173px;
+        width: 30%;
+        height: auto;
+        @include respond-to(37.5rem){
+          top: 12rem;
+          left: 450px;
+          max-width: 15%;
+        }
+        @include respond-to(60.625rem){
+          top: 12.58125rem;
+          left: 687.03px;
+          max-width: 20%;
+        }
       }
     }
   }

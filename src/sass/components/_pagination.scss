@@ -9,7 +9,7 @@
   background: red;
   @include respond-to(37.5rem) {
     width: 3.25rem;
-    height: 49.565rem;
+    height: 100vh;
     background: #273442;
     box-shadow: 1px 0 4px 0 rgba(0,0,0,0.27);
   }
