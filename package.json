@@ -15,7 +15,8 @@
   "scripts": {
     "start": "gulp dev --watch --gulpfile bin/gulpfile.babel.js",
     "build": "gulp build --prod --gulpfile bin/gulpfile.babel.js",
-    "server": "nodemon src/server/index.js --exec babel-node"
+    "server": "nodemon src/server/index.js --exec babel-node",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "6.3.0"
