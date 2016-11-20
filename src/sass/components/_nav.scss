@@ -1,0 +1,61 @@
+/**
+ * <.nav /> component style
+ *
+ */
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  overflow: hidden;
+  &__list {
+    overflow-x: scroll;
+    font-size: 14px;
+    color: #2B496A;
+    display: flex;
+    text-transform: uppercase;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  &__link {
+    text-decoration: none;
+    &--hiddenOnMobile{
+      display: none;
+    }
+  }
+  @media screen and (min-width: 960px) {
+    &__list {
+      width: 38rem;
+      font-size: 14px;
+      color: #2B496A;
+      text-transform: uppercase;
+      text-align: center;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: center;
+    }
+    &__item {
+      list-style-type: none;
+      margin: 1rem;
+      &--active{
+        color: #4179F7;
+      }
+    }
+    &__link {
+      text-decoration: none;
+      &--button {
+        width: 7.1875rem;
+        height: 2.25rem;
+        display: inline;
+        color: #FFFFFF;
+        padding: 0.625rem 1rem;
+        background-color: #315375;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.32);
+        border-radius: 2px;
+      }
+    }
+  }
+}

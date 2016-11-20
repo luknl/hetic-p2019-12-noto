@@ -10,6 +10,17 @@
   <link rel="stylesheet" href="css/style.css" loadCSS>
 </head>
 <body>
+  <header class="header">
+    <a class="header__logo" href="index.html"><img src="img/Logo.svg" alt="" /></a>
+    <nav class="nav">
+      <ul class="nav__list">
+        <li class="nav__item--active"><a class="nav__link" href="history.html">Introducing noto</a></li>
+        <li class="nav__item"><a class="nav__link" href="#">Credits</a></li>
+        <li class="nav__item"><a class="nav__link" href="#">Space</a></li>
+        <li class="nav__item"><a target="_blank"class="nav__link nav__link--hiddenOnMobile nav__link--button" href="https://www.google.com/get/noto/">Download</a></li>
+      </ul>
+    </nav>
+  </header>
   <main class="main">
     {% block main %}{% endblock %}
   </main>
