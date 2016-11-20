@@ -3,7 +3,6 @@
 import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
-import geoip from 'geoip-lite'
 import * as actions from './../shared/modules/notoSpace/actions'
 import { dispatch, watch } from './../shared/helpers/socket'
 
