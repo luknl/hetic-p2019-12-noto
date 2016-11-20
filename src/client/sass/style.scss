@@ -18,11 +18,13 @@
 @import "utils/functions";
 @import "utils/mixins";
 
+@import "base/reset";
+@import "base/body";
+@import "base/typography";
 @import "base/buttons";
 @import "base/form";
 @import "base/list";
 
-@import "components/article";
 @import "components/messages";
 @import "components/rooms";
 @import "components/code";

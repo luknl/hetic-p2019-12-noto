@@ -40,8 +40,9 @@ import twig from 'gulp-twig'
 import watch  from 'gulp-watch'
 import webpack from 'webpack'
 import webpackStream  from 'webpack-stream'
-import config from './config.js'
 import { argv } from 'yargs'
+import config from './../config.js'
+
 const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = config.dir
 
 const dev = argv.watch ? true : false
@@ -140,10 +141,9 @@ gulp.task('js', () => (
           'src/js/',
         ],
         alias: {
-          '@vendors': path.resolve(__dirname, 'src/js/vendors'),
-          '@helpers': path.resolve(__dirname, 'src/js/helpers'),
-          '@modules': path.resolve(__dirname, 'src/js/modules'),
-          '@utils': path.resolve(__dirname, 'src/js/utils'),
+          '@helpers': path.resolve(srcDir, 'client/js/helpers'),
+          '@modules': path.resolve(srcDir, 'client/js/modules'),
+          '@shared': path.resolve(srcDir, '../shared'),
         },
       },
       module: {
@@ -151,8 +151,7 @@ gulp.task('js', () => (
           loader: 'babel-loader',
           query: config.javascript.babel,
           exclude: [
-            path.resolve(__dirname, 'node_modules/'),
-            path.resolve(__dirname, 'src/js/vendors/')
+            path.resolve(__dirname, '../node_modules/'),
           ],
         }]
       },

@@ -1,3 +1,3 @@
 {
-  "ignore": ["src/*"]
+  "ignore": ["src/client/**", "__build__/**"]
 }

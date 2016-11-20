@@ -13,10 +13,9 @@
     "url": "https://github.com/luknl/hetic-p2019-12-noto.git"
   },
   "scripts": {
-    "start": "gulp dev --watch",
-    "test": "gulpt -T --sorted",
-    "build": "gulp build --prod",
-    "server": "nodemon server/index.js --exec babel-node"
+    "start": "gulp dev --watch --gulpfile bin/gulpfile.babel.js",
+    "build": "gulp build --prod --gulpfile bin/gulpfile.babel.js",
+    "server": "nodemon src/server/index.js --exec babel-node"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
