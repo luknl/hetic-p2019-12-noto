@@ -15,7 +15,7 @@
     border-radius: .5rem;
     color: white;
     text-align: right;
-    margin: .5rem 2rem;
+    margin: .5rem 2rem 2rem;
     &:nth-child(4n+ 1) {background-color: #457DF3}
     &:nth-child(4n+ 2) {background-color: #FC1B1F}
     &:nth-child(4n+ 3) {background-color: #1AB05A}
@@ -35,7 +35,7 @@
       position: absolute;
       right: 0;
       bottom: -1.6rem;
-      color: white;
+      color: black;
       font-size: .8rem;
     }
   }

@@ -1,13 +1,12 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Notoboard</title>
-    <link rel="stylesheet" href="http://localhost:8000/css/style.css">
-  </head>
-  <body style="background-color: #2F63A4;">
-    <ul class="messages"></ul>
-    <div class="rooms"></div>
-    <span class="user"></span>
-    <script src="js/notoboard.js"></script>
-  </body>
-</html>
+{# notoboard.twig #}
+{% extends "layout.twig" %}
+
+{% block main %}
+  <ul class="messages"></ul>
+  <div class="rooms"></div>
+  <ul class="user"></ul>
+{% endblock %}
+
+{% block javascript %}
+  <script src="js/notoboard.js"></script>
+{% endblock %}

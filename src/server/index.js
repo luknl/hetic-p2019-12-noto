@@ -19,29 +19,19 @@ http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
 const io = require('socket.io')(http)
 
 // Get actions and actionTypes
-const { getAllRooms, getAllMessages, getUser, addUser, sendMessage, ...actionTypes } = actions
+const {
+  getAllMessages, sendMessage,
+  getUser, addUser,
+  createRoom, joinRoom, getAllRooms,
+  ...actionTypes,
+} = actions
 
-// Initialyze rooms
-const rooms = [{ id: 0, name: 'main' }, { id: 1, name: 'room 1' }]
-
-const messages = {
-  [0]: [],
-  [1]: [
-    {
-      message: 'First message, hard written',
-      date: '2016-11-17T15:21:18.087Z',
-    }
-  ],
-}
-
+// Initialyze rooms, messages and users
+const rooms = [{ id: 0, name: 'main' }]
+const messages = {[0]: []}
 const users = []
 
-
-/**
- * IO connect =)
- */
 io.on('connection', (socket) => {
-
 
   /**
    * Add user to first room and send to him
@@ -52,7 +42,7 @@ io.on('connection', (socket) => {
   dispatch(
     getAllMessages(messages[defaultRoomId]),
     getAllRooms(rooms),
-  )(io, { to: defaultRoomId })
+  )(socket, { to: defaultRoomId })
 
 
   /**
@@ -76,9 +66,11 @@ io.on('connection', (socket) => {
           id: userId,
           roomId: defaultRoomId,
           desktopSocketId: socket.id,
+          mobileSocketId: null,
           isConnected: false,
         }
         users.push(user)
+        socket.join(defaultRoomId)
         // Send new user to connect
         dispatch(
           addUser(user),
@@ -95,7 +87,7 @@ io.on('connection', (socket) => {
         // Broadcast message to all users of the room
         dispatch(
           sendMessage(message),
-        )(socket, { to: message.roomId })
+        )(io, { to: message.roomId })
         // Save new message
         messages[message.roomId].push(message)
         break
@@ -115,7 +107,11 @@ io.on('connection', (socket) => {
         const currentUser = users[currentUserId]
         // Update isConnected value
         if (currentUser) {
-          users[currentUserId] = { ...currentUser, isConnected: true }
+          users[currentUserId] = {
+            ...currentUser,
+            isConnected: true,
+            mobileSocketId: socket.id,
+          }
         }
         // Send response to client
         const to = (!currentUser || !currentUser.roomId)
@@ -123,56 +119,60 @@ io.on('connection', (socket) => {
           : currentUser.roomId
         dispatch(getUser(currentUser))(io, { to })
       }
+      break
+
+
+      /**
+       * Create room
+       */
+      case actionTypes.INITIALIZE_ROOM: {
+        // Build room and save it
+        const { roomName } = payload
+        const roomId = rooms.length
+        const room = {
+          id: roomId,
+          name: roomName,
+        }
+        rooms.push(room)
+        messages[roomId] = []
+        // Join to it (mobile)
+        const userId = users.findIndex(({ mobileSocketId }) => {
+          return mobileSocketId === socket.id
+        })
+        if (userId === -1) return
+        users[userId].roomId = roomId
+        const user = users[userId]
+        socket.leave(room.roomId)
+        socket.join(roomId)
+        // Call clients
+        dispatch(
+          createRoom(room),
+          joinRoom(room, user),
+        )(io)
+        break
+      }
+
+
+      /**
+       * Join a room
+       */
+      case actionTypes.JOIN_ROOM: {
+        const { user, room } = payload
+        const userId = users.findIndex(({ id }) => id === user.id)
+        // From mobile
+        if (users[userId].mobileSocketId === socket.id) {
+          users[userId].roomId = room.id
+          dispatch(joinRoom(room, users[userId]))(io)
+        }
+        // From desktop
+        else {
+          socket.join(user.roomId)
+          dispatch(getAllMessages(messages[user.roomId]))(socket)
+        }
+      }
+
     }
 
   })(socket)
 
 })
-
-
-
-
-
-//   // Leave
-//   socket.on('LEAVE_ROOM', (roomId) => {
-//     socket.leave(roomId)
-//   })
-//
-//   socket.on('JOIN_ROOM', (data) => {
-//     // Create room if it doesn't exist
-//     if (!messages[data.roomId]) {
-//       messages[data.roomId] = []
-//     }
-//     socket.join(data.roomId)
-//     io.to(data.desktopSocketId).emit('CHANGE_ROOM', {roomId: data.roomId})
-//     // Send all previous messages
-//     messages[data.roomId].map((roomMessages) => {
-//       io.to(data.roomId).emit('chat message', {
-//         message:     roomMessages.message,
-//         roomId:  data.roomId,
-//         date:    data.date,
-//       })
-//     })
-//   })
-//
-//
-//   // Create new room from "send" client
-//   socket.on('create room', (data) => {
-//     // Create memory location where messages will be saved
-//     if (!messages[data.roomId]) {
-//       messages[data.roomId] = []
-//     }
-//     socket.join(data.roomId)
-//     io.to(data.roomId).emit('chat message', {
-//       roomId: data.roomId,
-//       roomName: data.roomName,
-//       message: 'This is a message to ' + data.roomId,
-//     })
-//
-//     // Give notoboard the infos to create a room for other to join
-//     io.emit('add room', {
-//       roomId: data.roomId,
-//       roomName: data.roomName,
-//     })
-//   })
-// })

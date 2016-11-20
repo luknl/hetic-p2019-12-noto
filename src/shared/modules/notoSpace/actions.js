@@ -5,14 +5,14 @@ import type { Room, User, Message } from './types'
 
 export const GET_USER = 'GET_USER'
 export const ADD_USER = 'ADD_USER'
-export const ADD_ROOM = 'ADD_ROOM'
 export const JOIN_ROOM = 'JOIN_ROOM'
 export const LEAVE_ROOM = 'LEAVE_ROOM'
-export const CHANGE_ROOM = 'CHANGE_ROOM'
+export const CREATE_ROOM = 'CREATE_ROOM'
 export const CONNECT_USER = 'CONNECT_USER'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const GENERATE_USER = 'GENERATE_USER'
 export const GET_ALL_ROOMS = 'GET_ALL_ROOMS'
+export const INITIALIZE_ROOM = 'INITIALIZE_ROOM'
 export const GET_ALL_MESSAGES = 'GET_ALL_MESSAGES'
 
 export const getUser = (user: ?User): Action => ({
@@ -25,18 +25,18 @@ export const addUser = (user: User): Action => ({
   payload: { user },
 })
 
-export const addRoom = (room: Room): Action => ({
-  type: ADD_ROOM,
-  payload: { room },
-})
-
-export const joinRoom = (room: Room): Action => ({
+export const joinRoom = (room: Room, user: User): Action => ({
   type: JOIN_ROOM,
-  payload: { room },
+  payload: { user, room },
 })
 
 export const leaveRoom = (room: Room): Action => ({
   type: LEAVE_ROOM,
+  payload: { room },
+})
+
+export const createRoom = (room: Room): Action => ({
+  type: CREATE_ROOM,
   payload: { room },
 })
 
@@ -58,6 +58,11 @@ export const generateUser = (): Action => ({
 export const getAllRooms = (rooms: Array<Room>): Action => ({
   type: GET_ALL_ROOMS,
   payload: { rooms },
+})
+
+export const initializeRoom = (roomName: string): Action => ({
+  type: INITIALIZE_ROOM,
+  payload: { roomName },
 })
 
 export const getAllMessages = (messages: Array<Message>): Action => ({

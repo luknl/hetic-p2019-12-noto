@@ -41,12 +41,19 @@ dispatch(generateUser())(socket)
  * prevent user, save in local state and
  * update UI
  */
-$rooms.addEventListener('click', ({ target }: Event) => {
-  const room = state.rooms.find((room) => target.id && room.id === target.id)
+$rooms.addEventListener('click', (e: Event) => {
+  e.preventDefault()
+  const roomId = parseInt(e.target.id)
+  const room = state.rooms.find(({ id }) => id === roomId)
   if (!room) return
-  dispatch(joinRoom(room))(socket)
+  state.user.roomId = roomId
+  const { user } = state
+  dispatch(joinRoom(room, user))(socket)
   $messages.innerHTML = ''
-  state.rooms.push(room)
+  $user.innerHTML = `
+    <li>userId: ${user.id}</li>
+    <li>roomId: ${user.roomId}</li>
+  `
 })
 
 
@@ -55,6 +62,7 @@ $rooms.addEventListener('click', ({ target }: Event) => {
  * helper
  */
 watch(({ type, payload }) => {
+  console.log({ type, payload })
   switch (type) {
 
     /**
@@ -63,23 +71,12 @@ watch(({ type, payload }) => {
     case actionTypes.ADD_USER: {
       if (!state.user) {
         const { user } = payload
-        $user.innerHTML = `userId: ${user.id}`
+        $user.innerHTML = `
+          <li>userId: ${user.id}</li>
+          <li>roomId: ${user.roomId}</li>
+        `
         state.user = user
       }
-      break
-    }
-
-
-    /**
-     * Change room
-     */
-    case actionTypes.CHANGE_ROOM: {
-      // Remove all messages
-      $messages.innerHTML = ''
-      // Push and join room
-      const { roomId } = payload
-      dispatch(joinRoom(roomId))(socket)
-      state.rooms.push(roomId)
       break
     }
 
@@ -108,8 +105,8 @@ watch(({ type, payload }) => {
      * Receive all messages
      */
     case actionTypes.GET_ALL_MESSAGES: {
-      // Display all message on wall
       const { messages } = payload
+      // Display all message on wall
       const randomColor = COLORS[Math.floor(Math.random() * 4)]
       $messages.innerHTML = messages.map((message) => `
         <li
@@ -120,7 +117,8 @@ watch(({ type, payload }) => {
           ${message.value}
         </li>
       `).join('')
-      break
+      state.messagesAreInitialized = true
+      return
     }
 
 
@@ -134,19 +132,37 @@ watch(({ type, payload }) => {
       $rooms.innerHTML = rooms.map((room) => `
         <div id="${room.id}" class="rooms__single">${room.name}</div>
       `).join('')
-      break
+      return
     }
 
 
     /**
      * Add new room
      */
-    case actionTypes.ADD_ROOM: {
+    case actionTypes.CREATE_ROOM: {
       const { room } = payload
       $rooms.innerHTML += `
         <div id="${room.id}" class="rooms__single">
           ${room.name}
         </div>
+      `
+      break
+    }
+
+    /**
+     * Join a room
+     */
+    case actionTypes.JOIN_ROOM: {
+      const { user, room } = payload
+      if (state.user.id !== user.id ) return
+      // Connect desktop to room
+      dispatch(joinRoom(room, user))(socket)
+      // Update state and UI
+      state.user.roomId = user.roomId
+      $messages.innerHTML += ''
+      $user.innerHTML = `
+        <li>id: ${user.id}</li>
+        <li>roomId: ${user.roomId}</li>
       `
       break
     }
