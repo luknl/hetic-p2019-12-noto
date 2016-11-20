@@ -5,9 +5,10 @@ import io from 'socket.io-client'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
+import { SOCKET_URL } from '@shared/config'
 
 // Initialyze sockets
-const socket = io('http://localhost:8080')
+const socket = io(SCOKET_URL)
 
 // Get actions and actionTypes
 const { joinRoom, generateUser, ...actionTypes } = actions

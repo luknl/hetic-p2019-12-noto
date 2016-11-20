@@ -4,12 +4,13 @@ import io from 'socket.io-client'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
+import { SOCKET_URL } from '@shared/config'
 
 // Get actions and actionTypes
 const { connectUser, sendMessage, initializeRoom, joinRoom, ...actionTypes } = actions
 
 // Initialyze sockets
-const socket = io('http://localhost:8080')
+const socket = io(SOCKET_URL)
 
 // Select DOM elements
 const $messageForm: HTMLElement = document.querySelector('.message')
