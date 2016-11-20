@@ -12,7 +12,6 @@
     flex: 0.33;
     width: 100vw;
     font-size: 150%;
-    font-weight: bold;
     text-transform: uppercase;
 
     h2 {
@@ -30,6 +29,7 @@
     flex: 0.33;
     width: 100vw;
     font-size: 300%;
+    font-weight: bold;
 
     &__typebar {
       justify-content: center;
@@ -65,7 +65,7 @@
       padding: 8px 15px;
       width: 400px;
       height: 90px;
-      font-size: 30px;
+      // font-size: 30px;
 
       &--down::before {
         position: absolute;
@@ -85,12 +85,14 @@
       &_fill {
         position: absolute;
         z-index: 0;
-        background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
+        // background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
+        background: url('http://img11.hostingpics.net/pics/424407Rectangle.png') no-repeat;
         background-size: 0px 90px;
         border-radius: 100px;
-        opacity: .7;
+        // opacity: .2;
         width: 400px;
         height: 90px;
+        font-size: 30px;
       }
 
     }
@@ -116,9 +118,5 @@
 .fillAnimation{
   margin-top:10px;
   background-size:400px 90px!important;
-  transition: background-size linear;
-}
-
-.circleGrowth {
-  transition: all 2s ease;
+  transition: background linear;
 }
