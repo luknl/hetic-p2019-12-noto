@@ -18,9 +18,13 @@
     "server": "nodemon src/server/index.js --exec babel-node",
     "postinstall": "npm run build"
   },
+  "engines": {
+    "node": "6.3.0"
+  },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
-    "eslint": "^3.9.1"
+    "eslint": "^3.9.1",
+    "flow-bin": "v0.34.0"
   },
   "dependencies": {
     "autoprefixer": "^6.1.1",
@@ -36,7 +40,6 @@
     "cors": "^2.8.1",
     "del": "^2.1.0",
     "express": "^4.14.0",
-    "flow-bin": "v0.34.0",
     "geoip-lite": "^1.1.8",
     "gulp": "^3.8.11",
     "gulp-base64": "^0.1.2",
