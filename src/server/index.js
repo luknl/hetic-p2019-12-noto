@@ -12,7 +12,7 @@ const app = express()
 const http = httpServer.Server(app)
 const port = process.env.PORT || 8080
 app.use(cors())
-app.use(express.static(__dirname + '/../__build__'))
+app.use(express.static(__dirname + '/../../dist'))
 http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
 
 // Initialyze sockets
@@ -117,7 +117,7 @@ io.on('connection', (socket) => {
         const to = (!currentUser || !currentUser.roomId)
           ? defaultRoomId
           : currentUser.roomId
-        dispatch(getUser(currentUser))(io, { to })
+        dispatch(getUser(currentUser))(socket, { to })
       }
       break
 
@@ -140,6 +140,7 @@ io.on('connection', (socket) => {
           return mobileSocketId === socket.id
         })
         if (userId === -1) return
+        users[userId].previousRoomId = users[userId].roomId
         users[userId].roomId = roomId
         const user = users[userId]
         socket.leave(room.roomId)
@@ -161,11 +162,13 @@ io.on('connection', (socket) => {
         const userId = users.findIndex(({ id }) => id === user.id)
         // From mobile
         if (users[userId].mobileSocketId === socket.id) {
+          users[userId].previousRoomId = users[userId].roomId
           users[userId].roomId = room.id
           dispatch(joinRoom(room, users[userId]))(io)
         }
         // From desktop
         else {
+          socket.leave(users[userId].previousRoomId)
           socket.join(user.roomId)
           dispatch(getAllMessages(messages[user.roomId]))(socket)
         }

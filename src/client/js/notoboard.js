@@ -37,32 +37,10 @@ dispatch(generateUser())(socket)
 
 
 /**
- * When an user wants to go to another room,
- * prevent user, save in local state and
- * update UI
- */
-$rooms.addEventListener('click', (e: Event) => {
-  e.preventDefault()
-  const roomId = parseInt(e.target.id)
-  const room = state.rooms.find(({ id }) => id === roomId)
-  if (!room) return
-  state.user.roomId = roomId
-  const { user } = state
-  dispatch(joinRoom(room, user))(socket)
-  $messages.innerHTML = ''
-  $user.innerHTML = `
-    <li>userId: ${user.id}</li>
-    <li>roomId: ${user.roomId}</li>
-  `
-})
-
-
-/**
  * Listen socket events with custom watch
  * helper
  */
 watch(({ type, payload }) => {
-  console.log({ type, payload })
   switch (type) {
 
     /**
@@ -85,8 +63,10 @@ watch(({ type, payload }) => {
      * Receive a message
      */
     case actionTypes.SEND_MESSAGE: {
-      // Display new message on wall
       const { message } = payload
+      // Security: check room
+      if (message.roomId !== state.user.roomId) return
+      // Display new message on wall
       const randomColor = COLORS[Math.floor(Math.random() * 4)]
       $messages.innerHTML += `
         <li

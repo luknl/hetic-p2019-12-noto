@@ -93,7 +93,6 @@ $rooms.addEventListener('click', (e: Event) => {
  * helper
  */
 watch(({ type, payload }) => {
-  console.log({ type, payload })
   switch (type) {
 
     /**
@@ -140,6 +139,7 @@ watch(({ type, payload }) => {
      */
     case actionTypes.JOIN_ROOM: {
       const { user } = payload
+      if (user.id !== state.user.id) return
       state.user.roomId = user.roomId
       $user.innerHTML = `
         <li>id: ${user.id}</li>

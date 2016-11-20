@@ -9,6 +9,7 @@ export type Message = {
 export type User = {
   id: number,
   roomId: number,
+  previousRoomId?: number,
   isConnected: boolean,
 }
 

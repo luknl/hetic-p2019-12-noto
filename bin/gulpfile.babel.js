@@ -22,7 +22,6 @@ import gulp  from 'gulp'
 import gulpIf  from 'gulp-if'
 import gulpFilter  from 'gulp-filter'
 import imagemin  from 'gulp-imagemin'
-import inline from 'gulp-inline-source'
 import named from 'vinyl-named'
 import path from 'path'
 import pngquant  from 'imagemin-pngquant'
@@ -244,21 +243,6 @@ gulp.task('revreplace', ['revision'], () => {
 
 
 
-// Inline
-gulp.task('inline', () => (
-   gulp.src(destDir + '*.html')
-    .pipe(inline({
-      rootpath: destDir
-    }))
-    .pipe(replace('<link rel="stylesheet" href="',
-     `<script>!function(a){"use strict";var b=function(b,c,d){function j(a){return e.body?a():void setTimeout(function(){j(a)})}function l(){f.addEventListener&&f.removeEventListener("load",l),f.media=d||"all"}var g,e=a.document,f=e.createElement("link");if(c)g=c;else{var h=(e.body||e.getElementsByTagName("head")[0]).childNodes;g=h[h.length-1]}var i=e.styleSheets;f.rel="stylesheet",f.href=b,f.media="only x",j(function(){g.parentNode.insertBefore(f,c?g:g.nextSibling)});var k=function(a){for(var b=f.href,c=i.length;c--;)if(i[c].href===b)return a();setTimeout(function(){k(a)})};return f.addEventListener&&f.addEventListener("load",l),f.onloadcssdefined=k,k(l),f};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
-      loadCSS("`))
-    .pipe(replace('" loadCSS>', '" )</script>'))
-    .pipe(gulp.dest(destDir))
-))
-
-
-
 // Dev
 gulp.task('dev', () => {
   runSequence(
@@ -284,7 +268,6 @@ gulp.task('build', () => {
     'clean',
     ['twig', 'fonts', 'sass', 'img', 'js'],
     'revreplace',
-    'inline',
   )
 })
 
