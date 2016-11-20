@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notoboard</title>
+    <link rel="stylesheet" href="http://localhost:8000/css/critical.css" inline>
+    <link rel="stylesheet" href="http://localhost:8000/css/style.css" loadCSS>
+    <style>
+      form input { border: 1px solid black; padding: 10px; margin-right: .5%; width: 100%;}
+    </style>
+  </head>
+  <div class="rooms"></div>
+  <body>
+    <div class="code">
+      <form class="code__form" action="">
+        <label for="code__input">What's your code?</label>
+        <h3>Noto<strong>Space</strong></h3>
+        <input id="code__input" type="number" class="input" autocomplete="off" />
+        <div class="code__error"></div>
+        <button>Ok</button>
+      </form>
+    </div>
+    <form action="" class="message__form">
+      <label for="message__form__input">Send Message</label>
+      <input id="message__form__input" class="message__form__input input" autocomplete="off" /><button>Send</button>
+    </form>
+    <form action="" class="room__form">
+      <label for="room__form-input">Create Room</label>
+      <input id="room__form-input" class="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <div class="rooms"></div>
+    <ul class="infos"></ul>
+    <script src="js/send.js"></script>
+  </body>
+</html>

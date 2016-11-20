@@ -5,10 +5,15 @@
 [libs]
 
 [options]
+<<<<<<< HEAD
 module.name_mapper='^@helpers\/\(.*\)$' -> '<PROJECT_ROOT>/src/client/js/helpers/\1'
 module.name_mapper='^@helpers$' -> '<PROJECT_ROOT>/src/client/js/helpers'
 module.name_mapper='^@shared\/\(.*\)$' -> '<PROJECT_ROOT>/src/shared/\1'
 module.name_mapper='^@shared$' -> '<PROJECT_ROOT>/src/shared'
+=======
+module.name_mapper='^@helpers\/\(.*\)$' -> '<PROJECT_ROOT>/src/js/helpers/\1'
+module.name_mapper='^@helpers$' -> '<PROJECT_ROOT>/src/js/helpers'
+>>>>>>> 2-socket-io
 
 [version]
 ^0.34.0
