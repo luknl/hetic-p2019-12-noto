@@ -5,6 +5,10 @@
 [libs]
 
 [options]
+module.name_mapper='^@helpers\/\(.*\)$' -> '<PROJECT_ROOT>/src/client/js/helpers/\1'
+module.name_mapper='^@helpers$' -> '<PROJECT_ROOT>/src/client/js/helpers'
+module.name_mapper='^@shared\/\(.*\)$' -> '<PROJECT_ROOT>/src/shared/\1'
+module.name_mapper='^@shared$' -> '<PROJECT_ROOT>/src/shared'
 
 [version]
 ^0.34.0

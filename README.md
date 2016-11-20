@@ -4,7 +4,9 @@
 [![Build Status](https://travis-ci.org/luknl/hetic-p2019-12-noto.svg?branch=master)](https://travis-ci.org/luknl/hetic-p2019-12-noto)
 
 ## Requirements
-- Node.js `5.0 or newer`
+- [Node.js](https://nodejs.org/en/) `5.0 or newer`
+- [Yarn](https://yarnpkg.com/)
+- [Babel CLI](https://babeljs.io/docs/usage/cli/)
 
 ## Stack
 - [Babel](http://babeljs.io/) `^6.0.0` ES6+ support
@@ -14,8 +16,7 @@
 - [Gulp](http://gulpjs.com/) streaming build system
 - [Webpack](https://webpack.github.io/) module loader and bundler
 
-
-## Getting started
+## Make the awesome
 
 ### Install
 
@@ -34,16 +35,12 @@ $ yarn                          # Install Node.js components listed in ./package
 ```
 Think to install gulp in global on your desktop : `yarn global add gulp`, if this has not been done before.
 
-#### How to start the dev mode ?
+### Getting started
 
 ```shell
-$ yarn start                    # or: gulp dev --watch
+$ yarn start
+$ yarn run server
 ```
 
-This will start a lightweight development server (browsersync dev server) with live reloading.
-
-#### How to build for production ?
-
-```shell
-$ yarn run build               # or: gulp build --prod
-```
+This will start a lightweight development server (browsersync dev server) with live reloading
+and a Node.js sockets server.
