@@ -17,7 +17,7 @@
     "build": "gulp build --prod --gulpfile bin/gulpfile.babel.js",
     "server": "nodemon src/server/index.js --exec babel-node",
     "postinstall": "npm run build",
-		"test": "eslint .",
+		"test": "eslint ."
   },
   "engines": {
     "node": "6.3.0"
