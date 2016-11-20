@@ -1,7 +1,3 @@
 {
-<<<<<<< HEAD
   "ignore": ["src/client/**", "__build__/**"]
-=======
-  "ignore": ["src/*"]
->>>>>>> 2-socket-io
 }
