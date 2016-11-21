@@ -1,12 +1,10 @@
 {# notoboard.twig #}
 {% extends "layout.twig" %}
+{% set page = 'space' %}
 
 {% block main %}
   <ul class="messages"></ul>
   <div class="rooms"></div>
   <ul class="user"></ul>
-{% endblock %}
-
-{% block javascript %}
-  <script src="js/notoboard.js"></script>
+  <ul class="writers"></ul>
 {% endblock %}
