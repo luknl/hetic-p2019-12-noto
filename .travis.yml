@@ -8,6 +8,11 @@ node_js:
 before_script:
   - npm install -g gulp
   - npm install -g yarn
-    
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 script: 
   - yarn test
