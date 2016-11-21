@@ -13,8 +13,11 @@
   justify-content: center;
   margin-top: 80px;
 
+  // Responsive notebooks (1280px)
   @include respond-to(80rem) {
+    position: fixed;
     left: 0;
+    top: -0.625rem;
     flex-direction: row;
     justify-content: flex-start;
     width: 3.25rem;
@@ -42,6 +45,7 @@
     opacity: 0.43;
     border-radius: 50%;
 
+    // Responsive notebooks (1280px)
     @include respond-to(80rem) {
       width: 12px;
       height: 12px;
@@ -65,12 +69,14 @@
         color: #FFFFFF;
         margin-top: 0.75rem;
 
+        // Responsive notebooks (1280px)
         @include respond-to(80rem) {
           width: 12.5rem;
           margin-left: 20px;
         }
       }
 
+      // Responsive notebooks (1280px)
       @include respond-to(80rem) {
         background: transparent;
         border: 2px solid #FFFFFF;
@@ -83,9 +89,13 @@
     color: #FFFFFF;
     font-size: 10px;
     text-transform: uppercase;
+    
     @include respond-to(37.5rem) {
+      // Responsive phablets (600px)
       font-size: 14px;
     }
+
+    // Responsive notebooks (1280px)
     @include respond-to(80rem) {
       width: 100px;
       position: absolute;
