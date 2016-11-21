@@ -87,7 +87,6 @@ export default () => {
     state.user.roomId = roomId
     $user.innerHTML = `
       <li>id: ${user.id}</li>
-      <li>Desktop Socket ID: ${user.desktopSocketId}</li>
       <li>roomId: ${roomId}</li>
     `
     dispatch(joinRoom(room, state.user))(socket)
@@ -155,7 +154,9 @@ export default () => {
        */
       case actionTypes.JOIN_ROOM: {
         const { user } = payload
-        if (user.id !== state.user.id) return
+        if (!state.user) return
+        const { id } = state.user
+        if (id && user.id !== id) return
         state.user.roomId = user.roomId
         $user.innerHTML = `
           <li>id: ${user.id}</li>
