@@ -13,7 +13,7 @@
     width: 100vw;
     font-size: 150%;
     @media (max-width: 500px){
-      font-size: 95%;
+      font-size: 110%;
       height: 90px;
     }
 
@@ -163,15 +163,28 @@
   align-items: center;
   background-color: #272727;
 
-  &__title {
+  &__main {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    h1 {
-      display: flex;
+    &__letters {
+      display: none;
       color: white;
+      font-size: 20rem;
+      position: absolute;
     }
+  }
+
+  // letter apparition animation
+  &__animation-down {
+    animation: letterDown 2.8s ease-in;
+    animation-fill-mode: forwards;
+  }
+    // letter apparition animation
+  &__animation-up {
+    animation: letterUp 2.8s ease-in;
+    animation-fill-mode: forwards;
   }
 }
 

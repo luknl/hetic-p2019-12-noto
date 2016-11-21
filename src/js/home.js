@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tofuSpaceBarCircle = document.querySelector('.tofu__spacebar__circle'),
         svgCircle   = document.querySelector('animateTransform'),
         letterContent = document.querySelector('.letter'),
+        letterMain = document.querySelector('.letter__main'),
         tofu        = [],
         word        = [],
+        notoLetters = ['あ', 'S', 'ノ'],
         colors      = ['#FF1407','#FFBE00','#00B156','#4179F7'],
         audio = new Audio('../sounds/loading.aif.m4a'),
         mobile = body.clientWidth < 500
@@ -153,6 +155,28 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       tofuContent.remove()
       letterContent.style.display = 'flex'
+      if(letterMain.innerHTML == ''){
+        // add all letters in dom
+        for (let j in notoLetters) {
+          letterMain.innerHTML += `<div class="letter__main__letters letter__main__letter__${j}">${notoLetters[j]}</div>`
+        }
+        // animate each letter
+        for (let j in notoLetters) {
+          let letters = document.querySelector(`.letter__main__letter__${j}`)
+          setTimeout(() => {
+            letters.style.display = 'flex';
+            // alternate animations each 2 letters in [notoLetters]
+            (j % 2 == 0) ? letters.className += ' letter__animation-down' : letters.className += ' letter__animation-up'
+          }, j * 4000)
+        }
+        // when all letters animations are done
+        setTimeout(() => {
+          letterContent.remove()
+          body.innerHTML = 'NEXT PART'
+        }, notoLetters.length * 4000)
+
+      }
+
     }, 800)
   }
 

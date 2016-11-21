@@ -8,3 +8,13 @@
   50%  {opacity: 0;}
   100% {opacity: 1.0;}
 }
+
+@keyframes letterDown {
+  0%   {top:0%;transform: rotate(90deg);}
+  100% {top:120%;transform: rotate(270deg);}
+}
+
+@keyframes letterUp {
+  0%   {bottom:0%;transform: rotate(300deg);}
+  100% {bottom:120%;transform: rotate(20deg);}
+}
