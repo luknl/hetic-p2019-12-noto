@@ -4,13 +4,17 @@
  */
 .pagination {
   position: absolute;
+  top: 0;
   width: 100vw;
   height: 3.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @include respond-to(60.625rem) {
+  margin-top: 80px;
+
+  @include respond-to(80rem) {
+    left: 0;
     flex-direction: row;
     justify-content: flex-start;
     width: 3.25rem;
@@ -23,11 +27,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    @include respond-to(60.625rem) {
+    @include respond-to(80rem) {
       width: 3.25rem;
       flex-direction: column;
       justify-content: center;
-
     }
   }
 
@@ -39,7 +42,7 @@
     opacity: 0.43;
     border-radius: 50%;
 
-    @include respond-to(60.625rem) {
+    @include respond-to(80rem) {
       width: 12px;
       height: 12px;
       opacity: 1;
@@ -50,21 +53,25 @@
       opacity: 1;
 
       &::before {
+        position: absolute;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        width: 100vw;
         content: attr(data-title);
+        font-size: 0.8125rem;
+        letter-spacing: 0.1875rem;
         text-transform: uppercase;
         color: #FFFFFF;
-        font-size: 10px;
-        @include respond-to(37.5rem) {
-          font-size: 14px;
-        }
-        @include respond-to(60.625rem) {
-          width: 100px;
-          position: absolute;
-          left: 100px;
+        margin-top: 0.75rem;
+
+        @include respond-to(80rem) {
+          width: 12.5rem;
+          margin-left: 20px;
         }
       }
 
-      @include respond-to(60.625rem) {
+      @include respond-to(80rem) {
         background: transparent;
         border: 2px solid #FFFFFF;
         box-sizing: border-box;
@@ -79,7 +86,7 @@
     @include respond-to(37.5rem) {
       font-size: 14px;
     }
-    @include respond-to(60.625rem) {
+    @include respond-to(80rem) {
       width: 100px;
       position: absolute;
       left: 100px;
