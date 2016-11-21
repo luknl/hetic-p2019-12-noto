@@ -26,7 +26,6 @@ import named from 'vinyl-named'
 import path from 'path'
 import pngquant  from 'imagemin-pngquant'
 import postcss  from 'gulp-postcss'
-import replace from 'gulp-replace'
 import rev from 'gulp-rev'
 import revReplace from 'gulp-rev-replace'
 import rewriteCSS from 'gulp-rewrite-css'
@@ -60,7 +59,12 @@ gulp.task('browser_sync', () => {
       destDir + imgDir + '*',
       destDir + jsDir + '*.js'
     ],
-    port: config.server.port
+    port: config.server.port,
+    ghostMode: {
+      clicks: false,
+      forms: false,
+      scroll: true,
+    }
   })
 })
 
@@ -140,8 +144,8 @@ gulp.task('js', () => (
           'src/js/',
         ],
         alias: {
-          '@helpers': path.resolve(srcDir, 'client/js/helpers'),
-          '@modules': path.resolve(srcDir, 'client/js/modules'),
+          '@helpers': path.resolve(srcDir, 'js/helpers'),
+          '@modules': path.resolve(srcDir, 'js/modules'),
           '@shared': path.resolve(srcDir, '../shared'),
         },
       },

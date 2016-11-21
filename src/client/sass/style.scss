@@ -26,6 +26,12 @@
 @import "base/list";
 
 @import "components/code";
+@import "components/header";
+@import "components/label";
+@import "components/login";
+@import "components/nav";
 @import "components/main";
 @import "components/messages";
-@import "components/rooms";
+@import "components/room";
+
+@import "pages/messenger";
