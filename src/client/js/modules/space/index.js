@@ -79,8 +79,8 @@ export default () => {
           const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML += `
             <li
-              style="background-color: ${randomColor}"
-              class="messages__single"
+              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 2 : .7}rem"
+              class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
               ${message.value}
@@ -96,11 +96,10 @@ export default () => {
         case actionTypes.GET_ALL_MESSAGES: {
           const { messages } = payload
           // Display all message on wall
-          const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML = messages.map((message) => `
             <li
-              style="background-color: ${randomColor}"
-              class="messages__single"
+              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 2 : .7}rem"
+              class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
               ${message.value}
@@ -119,7 +118,7 @@ export default () => {
           const { rooms } = payload
           state.rooms = rooms
           $rooms.innerHTML = rooms.map((room) => `
-            <div id="${room.id}" class="rooms__single">${room.name}</div>
+            <div id="${room.id}" class="room">${room.name}</div>
           `).join('')
           return
         }
@@ -131,7 +130,7 @@ export default () => {
         case actionTypes.CREATE_ROOM: {
           const { room } = payload
           $rooms.innerHTML += `
-            <div id="${room.id}" class="rooms__single">
+            <div id="${room.id}" class="room">
               ${room.name}
             </div>
           `
@@ -161,11 +160,15 @@ export default () => {
           if (!state.countries[user.language] ||!document.querySelector(`#${user.language}`)) {
             state.countries[user.language] = { count: 1 }
             $writers.innerHTML += `
-              <ul
-                id="${user.language}"
-                class="writers__single ${user.language}"
-                data-count="${state.countries[user.language].count}">
+              <ul class="${user.language} writers__single" id="${user.language}">
+                <div class="writers__dots">
+                  <div class="writers__dot writers__dot--1"></div>
+                  <div class="writers__dot writers__dot--2"></div>
+                  <div class="writers__dot writers__dot--3"></div>
+                </div>
+                <div class="writers__flag" data-count="${state.countries[user.language].count}">
                   ${flag(user.language.slice(-2))}
+                </div>
               </ul>
             `
           } else {
