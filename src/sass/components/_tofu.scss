@@ -12,11 +12,15 @@
     flex: 0.33;
     width: 100vw;
     font-size: 150%;
-    text-transform: uppercase;
+    @media (max-width: 500px){
+      font-size: 95%;
+      height: 90px;
+    }
 
     h2 {
      display: flex;
      justify-content: center;
+     letter-spacing: 5px;
    }
 
   }
@@ -30,11 +34,24 @@
     width: 100vw;
     font-size: 300%;
     font-weight: bold;
+    text-transform: uppercase;
+    color: $light-grey;
+    @media (max-width: 500px){
+      font-size: 100%;
+    }
 
     &__typebar {
       justify-content: center;
       align-items: center;
       animation: blink 1s ease infinite;
+      @media (max-width: 500px){
+        font-size: 200%;
+      }
+
+      input {
+        width: 5px;
+        color: transparent;
+      }
     }
 
     &__characters {
@@ -43,18 +60,26 @@
       align-items: center;
       width: 150px;
       font-size: 340%;
+      @media (max-width: 500px){
+        font-size: 280%;
+        width: 80px;
+      }
     }
 
   }
 
   // space bar
   .tofu__spacebar {
-    display: none;
+    display: flex;
+    visibility: hidden;
     justify-content: center;
     align-items: center;
-    flex: 0.33;
+    flex-grow: 0.33;
+    flex-shrink: 0;
+    flex-basis: auto;
     width: 100vw;
     transition: display 1s ease;
+    position: relative;
 
     &__button {
       background: $tofu-white;
@@ -65,7 +90,12 @@
       padding: 8px 15px;
       width: 400px;
       height: 90px;
-      // font-size: 30px;
+      @media (max-width: 500px){
+        width: 200px;
+        height: 70px;
+        top: 25%;
+        left: 25%;
+      }
 
       &--down::before {
         position: absolute;
@@ -85,20 +115,27 @@
       &_fill {
         position: absolute;
         z-index: 0;
-        // background: url('https://c2.staticflickr.com/5/4034/4544827697_6f73866999_n.jpg') no-repeat;
         background: url('http://img11.hostingpics.net/pics/424407Rectangle.png') no-repeat;
         background-size: 0px 90px;
         border-radius: 100px;
-        // opacity: .2;
         width: 400px;
         height: 90px;
         font-size: 30px;
+        @media (max-width: 500px){
+          width: 200px;
+          height: 70px;
+          background-size: 0px 70px;
+          font-size: 18px;
+          top: 25%;
+          left: 25%;
+        }
       }
 
     }
 
     &__circle {
       display: none;
+      opacity: 0;
       position: absolute;
     }
 
@@ -106,17 +143,46 @@
 
   // character apparition animation
   &__animation {
-    padding-top:20px;
+    padding-top: 20px;
     font-size: 275%;
     animation: fadeIn .7s ease-in;
   }
 
 }
 
+
+// Part 2 //
+
+.letter {
+  display: none;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #272727;
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      display: flex;
+      color: white;
+    }
+  }
+}
+
+
 // transitions //
 
 .fillAnimation{
-  margin-top:10px;
-  background-size:400px 90px!important;
+  margin-top: 10px;
+  background-size: 400px 90px!important;
   transition: background linear;
+  @media (max-width: 500px){
+    background-size: 200px 90px!important;
+  }
 }
