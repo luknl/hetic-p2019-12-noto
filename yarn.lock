@@ -1468,6 +1468,10 @@ cors:
   dependencies:
     vary "^1"
 
+country-code-emoji:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/country-code-emoji/-/country-code-emoji-0.0.1.tgz#de9bc8cfae25aa56c44bae1e18123cbdffba66bb"
+
 create-error-class@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/create-error-class/-/create-error-class-3.0.2.tgz#06be7abef947a3f14a30fd610671d401bca8b7b6"

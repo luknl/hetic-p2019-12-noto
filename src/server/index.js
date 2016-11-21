@@ -3,7 +3,6 @@
 import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
-import geoip from 'geoip-lite'
 import * as actions from './../shared/modules/notoSpace/actions'
 import { dispatch, watch } from './../shared/helpers/socket'
 
@@ -22,7 +21,7 @@ const io = require('socket.io')(http)
 const {
   getAllMessages, sendMessage,
   getUser, addUser,
-  createRoom, joinRoom, getAllRooms,
+  createRoom, joinRoom, getAllRooms, stopTyping, startTyping,
   ...actionTypes,
 } = actions
 
@@ -56,6 +55,8 @@ io.on('connection', (socket) => {
        * Generate a new user
        */
       case actionTypes.GENERATE_USER: {
+        // Get language
+        const { language } = payload
         // Generate unsed ID
         let userId = Math.floor(Math.random() * 1000)
         while (users.find(({ id }) => id === userId)) {
@@ -68,6 +69,7 @@ io.on('connection', (socket) => {
           desktopSocketId: socket.id,
           mobileSocketId: null,
           isConnected: false,
+          language,
         }
         users.push(user)
         socket.join(defaultRoomId)
@@ -172,7 +174,27 @@ io.on('connection', (socket) => {
           socket.join(user.roomId)
           dispatch(getAllMessages(messages[user.roomId]))(socket)
         }
+        break
       }
+
+
+      /**
+       * Send to desktop user who's writing
+       */
+       case actionTypes.START_TYPING: {
+         const { user } = payload
+         dispatch(startTyping(user))(io, { to: user.roomId })
+         break
+       }
+
+      /**
+       * Send to desktop user who stopped writing
+       */
+       case actionTypes.STOP_TYPING: {
+         const { user } = payload
+         dispatch(stopTyping(user))(io, { to: user.roomId })
+         break
+       }
 
     }
 

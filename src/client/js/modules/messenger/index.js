@@ -10,7 +10,10 @@ import MessengerUI from './MessengerUI'
 export default () => {
 
   // Get actions and actionTypes
-  const { connectUser, sendMessage, initializeRoom, joinRoom, ...actionTypes } = actions
+  const {
+    connectUser, sendMessage, initializeRoom, joinRoom,
+    startTyping, stopTyping, ...actionTypes,
+  } = actions
 
   // Initialyze sockets
   const socket = io(SOCKET_URL)
@@ -26,6 +29,10 @@ export default () => {
   // Set initial state
   type State = { user?: User, rooms: Array<Room> }
   const state: State = { rooms: [] }
+
+  // Get language
+  const language = navigator.language || navigator.userLanguage
+  const country = language.slice(-2)
 
 
   /**
@@ -45,7 +52,7 @@ export default () => {
     if (!state.user || !value) return
     // Build message
     const { roomId } = state.user
-    const message = { value, roomId, createAt: new Date() }
+    const message = { value, roomId, createAt: new Date(), country }
     // Prevent server
     dispatch(sendMessage(message))(socket)
     // Reset input
@@ -83,6 +90,25 @@ export default () => {
       <li>roomId: ${roomId}</li>
     `
     dispatch(joinRoom(room, state.user))(socket)
+  })
+
+  /**
+   * Send user typing
+   */
+  let writing = false
+  $messageInput.addEventListener('keyup', () => {
+    const { value } = $messageInput
+    const { user } = state
+    if (!writing && value !== '') {
+      writing = true
+      console.log('start', writing)
+      dispatch(startTyping(user))(socket)
+
+    } else if(value === '') {
+      writing = false
+      console.log('stop')
+      dispatch(stopTyping(user))(socket)
+    }
   })
 
 
