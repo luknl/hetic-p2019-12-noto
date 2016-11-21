@@ -79,13 +79,15 @@ export default () => {
           const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML += `
             <li
-              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 2 : .7}rem"
+              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
               ${message.value}
             </li>
           `
+          // Scroll to bottom
+          $messages.scrollTop = $messages.scrollHeight
           break
         }
 
@@ -98,7 +100,7 @@ export default () => {
           // Display all message on wall
           $messages.innerHTML = messages.map((message) => `
             <li
-              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 2 : .7}rem"
+              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
@@ -106,6 +108,8 @@ export default () => {
             </li>
           `).join('')
           state.messagesAreInitialized = true
+          // Scroll to bottom
+          $messages.scrollTop = $messages.scrollHeight
           return
         }
 
