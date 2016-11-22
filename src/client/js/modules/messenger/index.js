@@ -19,18 +19,17 @@ export default () => {
   const socket = io(SOCKET_URL)
 
   // Select DOM elements
-  const $messageForm: HTMLElement = document.querySelector('.message')
-  const $messageInput: HTMLInputElement = document.querySelector('.message__input')
-  const $roomForm: HTMLElement = document.querySelector('.room__form')
-  const $roomInput: HTMLInputElement = document.querySelector('.room__input')
-  const $user: HTMLElement = document.querySelector('.user')
+  const $messageForm: HTMLElement = document.querySelector('.popup__form--message')
+  const $messageInput: HTMLInputElement = $messageForm.querySelector('input')
+  const $roomForm: HTMLElement = document.querySelector('.popup__form--room')
+  const $roomInput: HTMLInputElement = $roomForm.querySelector('input')
   const $rooms: HTMLElement = document.querySelector('.rooms')
 
   // Set initial state
   type State = { user?: User, rooms: Array<Room> }
   const state: State = { rooms: [] }
 
-  // Get language
+  // Get browser language
   const language = navigator.language || navigator.userLanguage
   const country = language.slice(-2)
 
@@ -44,19 +43,23 @@ export default () => {
 
 
   /**
+   * Manage popups
+   */
+  MessengerUI.onPressController((name) => {
+    MessengerUI.openPopup(name)
+  })
+
+
+  /**
    * Send a message
    */
-  $messageForm.addEventListener('submit', (e: Event) => {
-    e.preventDefault()
-    const { value } = $messageInput
+  MessengerUI.onSendMessage((value) => {
     if (!state.user || !value) return
-    // Build message
+    // Build message and send it to server
     const { roomId } = state.user
     const message = { value, roomId, createAt: new Date(), country }
-    // Prevent server
     dispatch(sendMessage(message))(socket)
-    // Reset input
-    $messageInput.value = ''
+    MessengerUI.resetMessageInput()
   })
 
 
@@ -85,10 +88,6 @@ export default () => {
     if (!room) return
     if (!state.user || !user) return
     state.user.roomId = roomId
-    $user.innerHTML = `
-      <li>id: ${user.id}</li>
-      <li>roomId: ${roomId}</li>
-    `
     dispatch(joinRoom(room, state.user))(socket)
   })
 
@@ -99,14 +98,12 @@ export default () => {
   $messageInput.addEventListener('keyup', () => {
     const { value } = $messageInput
     const { user } = state
+    if (!user) return
     if (!writing && value !== '') {
       writing = true
-      console.log('start', writing)
       dispatch(startTyping(user))(socket)
-
     } else if(value === '') {
       writing = false
-      console.log('stop')
       dispatch(stopTyping(user))(socket)
     }
   })
@@ -158,11 +155,6 @@ export default () => {
         const { id } = state.user
         if (id && user.id !== id) return
         state.user.roomId = user.roomId
-        $user.innerHTML = `
-          <li>id: ${user.id}</li>
-          <li>Desktop Socket ID: ${user.desktopSocketId}</li>
-          <li>roomId: ${user.roomId}</li>
-        `
         break
       }
 
