@@ -3,6 +3,7 @@
 import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
+import compression from 'compression'
 import * as actions from './../shared/modules/notoSpace/actions'
 import { dispatch, watch } from './../shared/helpers/socket'
 
@@ -11,7 +12,13 @@ const app = express()
 const http = httpServer.Server(app)
 const port = process.env.PORT || 8080
 app.use(cors())
-app.use(express.static(__dirname + '/../../dist'))
+app.use(compression()) // Enable GZIP
+app.use(
+  express.static(
+    __dirname + '/../../dist',
+     { maxAge: 86400000 }, // Cache content one day
+  ),
+)
 http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
 
 // Initialyze sockets
