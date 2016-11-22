@@ -38,4 +38,9 @@ This will start a Node.js server with sockets support. You can change config in 
 ```shell
 $ yarn start
 ```
-This will start a lightweight development server (browsersync dev server) with live reloading
+This will start a lightweight development server (browsersync dev server) with live reloading.
+
+You need to run server in background to enable sockets support by launching following script :
+```shell
+$ yarn run server
+```
