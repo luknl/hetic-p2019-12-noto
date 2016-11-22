@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* @flow */
+
+export default () => {
   const body         = document.querySelector('body'),
         tofuContent  = document.querySelector('.tofu'),
         tofuTitle    = document.querySelector('.tofu__title h2'),
@@ -179,5 +181,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }, 800)
   }
-
-})
+}

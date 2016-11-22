@@ -1,3 +1,7 @@
+/**
+ * <.tofu /> component style
+ *
+ */
 .tofu {
   display: flex;
   flex-direction: column;
@@ -82,7 +86,7 @@
     position: relative;
 
     &__button {
-      background: $tofu-white;
+      background: $white;
       border: 3px solid $grey;
       border-radius: 100px;
       justify-content: center;

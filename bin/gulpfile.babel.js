@@ -41,7 +41,7 @@ import webpackStream  from 'webpack-stream'
 import { argv } from 'yargs'
 import config from './../config.js'
 
-const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = config.dir
+const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir, soundDir } = config.dir
 
 const dev = argv.watch ? true : false
 const production = argv.prod ? true : false
@@ -139,8 +139,8 @@ gulp.task('js', () => (
           'src/js/',
         ],
         alias: {
-          '@helpers': path.resolve(srcDir, 'client/js/helpers'),
-          '@modules': path.resolve(srcDir, 'client/js/modules'),
+          '@helpers': path.resolve(srcDir, 'js/helpers'),
+          '@modules': path.resolve(srcDir, 'js/modules'),
           '@shared': path.resolve(srcDir, '../shared'),
         },
       },
@@ -189,6 +189,12 @@ gulp.task('img', () => (
     .pipe(gulp.dest(destDir + imgDir))
 ))
 
+
+// Sounds
+gulp.task('sound', () => {
+  gulp.src(srcDir + 'sounds/*.m4a')
+    .pipe(gulp.dest(destDir + soundDir))
+})
 
 
 // HTML
@@ -247,7 +253,7 @@ gulp.task('dev', () => {
   runSequence(
     'clean',
     ['twig', 'html'],
-    ['fonts', 'sass', 'img'],
+    ['fonts', 'sass', 'img', 'sound'],
     'browser_sync',
     'js'
   )
@@ -265,7 +271,7 @@ gulp.task('dev', () => {
 gulp.task('build', () => {
   runSequence(
     'clean',
-    ['twig', 'fonts', 'sass', 'img', 'js'],
+    ['twig', 'fonts', 'sass', 'img', 'js', 'sound'],
     'revreplace',
   )
 })
