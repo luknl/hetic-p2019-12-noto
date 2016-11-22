@@ -33,7 +33,7 @@ const {
 } = actions
 
 // Initialyze rooms, messages and users
-const rooms = [{ id: 0, name: 'main' }]
+const rooms = [{ id: 0, name: 'Main' }]
 const messages = {[0]: []}
 const users = []
 

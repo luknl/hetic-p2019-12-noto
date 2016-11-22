@@ -11,6 +11,8 @@ export default class MessengerUI {
   static $messageForm: HTMLElement = document.querySelector('.popup__form--message')
   static $messageInput: HTMLInputElement = document.querySelector('.popup__form--message input')
   static $controllerButton: HTMLCollection<HTMLElement> = document.querySelectorAll('.controller__button')
+  static $roomForm: HTMLElement = document.querySelector('.popup__form--room')
+  static $roomInput: HTMLInputElement = document.querySelector('.popup__form--room input')
   static $rooms: HTMLElement = document.querySelector('.rooms')
 
   static onLogin(callback: (userId: number) => void): void {
@@ -66,6 +68,15 @@ export default class MessengerUI {
 
   static resetMessageInput() {
     this.$messageInput.value = ''
+  }
+
+  static onCreateRoom(callback: (value: string) => void) {
+    this.$roomForm.addEventListener('submit', (e: Event) => {
+      e.preventDefault()
+      const { value } = this.$roomInput
+      this.$roomInput.value = ''
+      callback(value)
+    })
   }
 
 

@@ -125,7 +125,6 @@ gulp.task('sass', () => {
 })
 
 
-
 // Babel
 gulp.task('js', () => (
   gulp.src(`${srcDir + jsDir}*.js`)
@@ -159,10 +158,13 @@ gulp.task('js', () => (
         }]
       },
       plugins: [
+        new webpack.DefinePlugin({
+          'NODE_ENV': process.env.NODE_ENV || 'development',
+        }),
         new webpack.NoErrorsPlugin()
       ].concat(production
         ? [new webpack.optimize.UglifyJsPlugin()]
-        : [new webpack.NoErrorsPlugin()]
+        : []
       )
     }))
     .on('error', (err) => {

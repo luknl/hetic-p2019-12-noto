@@ -2,12 +2,16 @@
 
 import io from 'socket.io-client'
 import { SOCKET_URL } from '@shared/config'
+import { isMobile } from  '@helpers/browser'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
 import MessengerUI from './MessengerUI'
 
 export default () => {
+
+  // If user is on desktop, redirect it to space page
+  if (!isMobile()) window.location.href = 'space.html'
 
   // Get actions and actionTypes
   const {
@@ -21,8 +25,6 @@ export default () => {
   // Select DOM elements
   const $messageForm: HTMLElement = document.querySelector('.popup__form--message')
   const $messageInput: HTMLInputElement = $messageForm.querySelector('input')
-  const $roomForm: HTMLElement = document.querySelector('.popup__form--room')
-  const $roomInput: HTMLInputElement = $roomForm.querySelector('input')
   const $rooms: HTMLElement = document.querySelector('.rooms')
 
   // Set initial state
@@ -30,49 +32,33 @@ export default () => {
   const state: State = { rooms: [] }
 
   // Get browser language
-  const language = navigator.language || navigator.userLanguage
-  const country = language.slice(-2)
+  const language: string = navigator.language || navigator.userLanguage
+  const country: string = language.slice(-2)
 
-
-  /**
-   * Connect client to desktop client
-   */
+  // Connect client to desktop client
   MessengerUI.onLogin((userId) => {
     dispatch(connectUser(userId))(socket)
   })
 
-
-  /**
-   * Manage popups
-   */
+  // Add popup support
   MessengerUI.onPressController((name) => {
     MessengerUI.openPopup(name)
   })
 
-
-  /**
-   * Send a message
-   */
-  MessengerUI.onSendMessage((value) => {
-    if (!state.user || !value) return
-    // Build message and send it to server
-    const { roomId } = state.user
-    const message = { value, roomId, createAt: new Date(), country }
-    dispatch(sendMessage(message))(socket)
-    MessengerUI.resetMessageInput()
+  // Create a room
+  MessengerUI.onCreateRoom((value) => {
+    dispatch(initializeRoom(value))(socket)
   })
 
-
-  /**
-   * Create a room
-   */
-  $roomForm.addEventListener('submit', (e: Event) => {
-    e.preventDefault()
-    // Call server to create room
-    const roomName = $roomInput.value
-    dispatch(initializeRoom(roomName))(socket)
-    // Reset input
-    $roomInput.value = ''
+  // Send a message
+  MessengerUI.onSendMessage((value) => {
+    if (!state.user || !value) return
+    // Build message
+    const { roomId } = state.user
+    const message = { value, roomId, createAt: new Date(), country }
+    // Send it to server
+    dispatch(sendMessage(message))(socket)
+    MessengerUI.resetMessageInput()
   })
 
 
@@ -117,10 +103,7 @@ export default () => {
   watch(({ type, payload }) => {
     switch (type) {
 
-      /**
-       * Server says if connection is ok
-       * or not
-       */
+      // Server says if connection is ok
       case actionTypes.GET_USER: {
         // Test if user has already been connected
         if (state.user) return
@@ -133,10 +116,7 @@ export default () => {
         break
       }
 
-
-      /**
-       * Receive all rooms
-       */
+      // Receive all rooms
       case actionTypes.GET_ALL_ROOMS: {
         // Display all rooms
         const { rooms } = payload
@@ -145,10 +125,7 @@ export default () => {
         break
       }
 
-
-      /**
-       * Join a room
-       */
+      // Join a room
       case actionTypes.JOIN_ROOM: {
         const { user } = payload
         if (!state.user) return
@@ -158,10 +135,7 @@ export default () => {
         break
       }
 
-
-      /**
-       * Create a room
-       */
+      // Create a room
       case actionTypes.CREATE_ROOM: {
         const { room } = payload
         state.rooms.push(room)
