@@ -1,6 +1,8 @@
 language: node_js
 
-sudo: false
+compiler: gcc
+
+sudo: true
 
 node_js:
   - "node"
@@ -10,5 +12,5 @@ cache:
   directories:
     - node_modules
 
-script: 
+script:
   - yarn test

@@ -30,6 +30,7 @@ Think to install gulp in global on your desktop : `yarn global add gulp`, if thi
 
 ### Getting started
 ```shell
+$ yarn run build
 $ yarn run server
 ```
 This will start a Node.js server with sockets support. You can change config in the following directory : `src/shared/config`.
