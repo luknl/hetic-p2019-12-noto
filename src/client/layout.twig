@@ -18,9 +18,9 @@
       </a>
       <nav class="nav">
         <ul class="nav__list">
-          <li class="nav__item"><a class="nav__link" href="storytelling.html">Introducing Noto</a></li>
-          <li class="nav__item"><a class="nav__link" href="thanks.html">Credits</a></li>
-          <li class="nav__item"><a class="nav__link is-active" href="space.html">Space</a></li>
+          <li class="nav__item"><a class="nav__link {{ page == 'storytelling' ? 'is-active' : '' }}" href="storytelling.html">Introducing Noto</a></li>
+          <li class="nav__item"><a class="nav__link {{ page == 'credits' ? 'is-active' : '' }}" href="thanks.html">Credits</a></li>
+          <li class="nav__item"><a class="nav__link {{ (page == 'space' or page == 'messenger') ? 'is-active' : '' }}" href="space.html">Space</a></li>
           <li class="nav__item"><a target="_blank" class="nav__link nav__link--button" href="https://www.google.com/get/noto/">Download</a></li>
         </ul>
       </nav>
