@@ -87,7 +87,7 @@ gulp.task('sass', () => {
     fonts[font].map(weight => {
       let url = {}
       config.fonts.formats.split(' ').map(format => {
-        url[format] = `./${production ? '' : '../'}fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
+        url[format] = `../${production ? '' : '../'}fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
       })
       customFonts[font]['variants'][weight] = {
         [weight]: { url: url }
