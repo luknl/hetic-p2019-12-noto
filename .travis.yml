@@ -2,7 +2,7 @@ language: node_js
 
 compiler: gcc
 
-sudo: false
+sudo: true
 
 node_js:
   - "node"
