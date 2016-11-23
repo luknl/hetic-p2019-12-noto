@@ -9,12 +9,22 @@
   100% {opacity: 1.0;}
 }
 
-@keyframes letterDown {
-  0%   {top:0%;transform: rotate(90deg);}
-  100% {top:120%;transform: rotate(270deg);}
+@keyframes letterAnim1 {
+  0%   { bottom: -30%; transform : rotate(0deg) scale(1); }
+  50%  { bottom: 50%; transform : rotate(140deg) scale(1); }
+  99%  { opacity: 1; }
+  100% { bottom: 400%; transform: rotate(200deg) scale(35); opacity: 0; }
 }
 
-@keyframes letterUp {
-  0%   {bottom:0%;transform: rotate(300deg);}
-  100% {bottom:120%;transform: rotate(20deg);}
+@keyframes letterAnim2 {
+  0%   { left: -30%; top: -30%; transform: rotate(0deg) scale(2); }
+  50%  { left: 50%; top: 50%; transform: rotate(150deg) scale(2); }
+  99%  { opacity: 1; }
+  100% { left: 400%; transform: rotate(210deg) scale(40); opacity: 0; }
+}
+
+@keyframes letterAnim3 {
+  0%   { left: 0%; top: 20%; transform: rotate(50deg) scale(0); }
+  50%  { opacity: 1; }
+  100% { left: 130%; top:40%; transform: rotate(220deg) scale(30); opacity: 0; }
 }

@@ -12,23 +12,24 @@ export default () => {
         tofuSpaceBarDown   = document.querySelector('.tofu__spacebar__button--down'),
         tofuSpaceBarFill   = document.querySelector('.tofu__spacebar__button_fill'),
         tofuSpaceBarCircle = document.querySelector('.tofu__spacebar__circle'),
+        tofuExperience = document.querySelector('.tofu__experience'),
         svgCircle   = document.querySelector('animateTransform'),
         letterContent = document.querySelector('.letter'),
         letterMain = document.querySelector('.letter__main'),
+        letterNoto = document.querySelector('.letter__noto'),
         tofu        = [],
         word        = [],
-        notoLetters = ['あ', 'S', 'ノ'],
+        notoLetters = ['あ', 'a', 'ה'],
         colors      = ['#FF1407','#FFBE00','#00B156','#4179F7'],
         audio = new Audio('../sounds/loading.aif.m4a'),
-        mobile = body.clientWidth < 500
+        mobile = body.clientWidth < 500 // define mobile width to handle events only in mobile
   let   i        = 0, // incrementator for each character
         revealed = false, // check if all characters have been revealed
         fired    = false
-
-  // animating title when page has loaded
+  // animating title on page start
   tofuTitle.style.letterSpacing = '0px'
   tofuTitle.style.opacity = '1'
-  tofuTitle.style.transition = 'all 2.7s ease'
+  tofuTitle.style.transition = 'all 1s ease'
 
   // when user starts typing
   addEventListeners([body, tofuTypeBar],['keyup', 'touchstart'], (e) => {
@@ -44,14 +45,17 @@ export default () => {
       // remove type bar and add bottom space bar
       tofuTypeBar.style.display   = 'none'
       tofuSpaceBar.style.visibility = 'visible'
-      tofuSpaceBarFill.innerText = 'Press space to noto'
-      // Add a tofu character for each key pressed in "tofu" array
-      tofu.push(`<span class="tofu__input__characters tofu__input__character__${i}">□</span>`)
-      // Add pressed key character in "word" array
-      word.push(String.fromCharCode(androidKey))
-      // display characters in the dom
-      tofuInput.innerHTML += tofu[i]
-      i++
+      tofuSpaceBarFill.innerHTML = '<p>hold spacebar to <span style="font-weight:700;">Noto</span></p>'
+      // limit to 6 characters
+      if(i < 6){
+        // Add a tofu character for each key pressed in "tofu" array
+        tofu.push(`<span class="tofu__input__characters tofu__input__character__${i}">□</span>`)
+        // Add pressed key character in "word" array
+        word.push(String.fromCharCode(androidKey))
+        // display characters in the dom
+        tofuInput.innerHTML += tofu[i]
+        i++
+      }
     }
     // if backspace, then remove last value of array and last tofu
     else if (e.keyCode === 8) {
@@ -100,7 +104,6 @@ export default () => {
         setTimeout(() => {
           revealed = true
           tofuSpaceBarFill.innerText = 'ta-dah! now release.'
-          // tofuInput.innerHTML = ''
         }, i * 400)
 
       }
@@ -115,13 +118,14 @@ export default () => {
         // restore dom in the initial state
         tofuSpaceBarDown.className = 'tofu__spacebar__button tofu__spacebar__button--down'
         tofuSpaceBarBtn.style.marginTop = '0px'
-        tofuSpaceBarFill.innerText = 'Press space to noto'
+        tofuSpaceBarFill.innerHTML = '<p>hold spacebar to <span style="font-weight:700;">Noto</span></p>'
         tofuSpaceBarFill.className = 'tofu__spacebar__button_fill'
         tofuInput.innerHTML = tofu.join('')
 
         // if all letters have been revealed
         if (revealed) circleGrowth() // function to animate a growing circle in svg
         else audio.pause()
+
       }
     })
   })
@@ -146,6 +150,10 @@ export default () => {
   // svg circle animation function
   function circleGrowth() {
     body.style.overflow = 'hidden'
+    // hide buttons
+    tofuSpaceBarBtn.style.display = 'none'
+    tofuSpaceBarFill.style.display = 'none'
+    // display svg circle
     tofuSpaceBarCircle.style.display = 'block'
     tofuSpaceBarCircle.style.opacity = '1'
     // release sound
@@ -166,16 +174,44 @@ export default () => {
         for (let j in notoLetters) {
           let letters = document.querySelector(`.letter__main__letter__${j}`)
           setTimeout(() => {
-            letters.style.display = 'flex';
+            letters.style.display = 'flex'
             // alternate animations each 2 letters in [notoLetters]
-            (j % 2 == 0) ? letters.className += ' letter__animation-down' : letters.className += ' letter__animation-up'
-          }, j * 4000)
+
+            // (j % 2 == 0) ? letters.className += ' letter__animation-down' : letters.className += ' letter__animation-up'
+
+            // first letter animation
+            if (j == 0) {
+              letters.className += ' letter__animation-1'
+              letterContent.style.background = '#272727'
+              // letterContent.style.transition = 'background .7s ease'
+              letters.style.color = 'white'
+            }
+            // second letter animation
+            else if (j == 1) {
+              letters.className += ' letter__animation-2'
+              letterContent.style.background = 'white'
+              // letterContent.style.transition = 'background .7s ease'
+              letters.style.color = '#272727'
+            }
+            // third letter animation
+            else {
+              letters.className += ' letter__animation-3'
+              letterContent.style.background = '#272727'
+              letters.style.color = 'white'
+            }
+
+          }, j * 2500)
         }
         // when all letters animations are done
         setTimeout(() => {
-          letterContent.remove()
-          body.innerHTML = 'NEXT PART'
-        }, notoLetters.length * 4000)
+          letterNoto.style.display = 'flex'
+          letterMain.style.display = 'none'
+          letterContent.style.backgroundColor = 'radial-gradient(circle, #454545 0%, #2B2B2B 100%)'
+          letterContent.style.backgroundImage = 'url("../img/noise.png")'
+          letterContent.style.backgroundRepeat = 'repeat'
+          letterContent.style.backgroundBlendMode = 'overlay'
+          letterContent.style.transition = 'background 2.7s ease'
+        }, notoLetters.length * 2500)
 
       }
 

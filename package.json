@@ -17,7 +17,7 @@
     "build": "gulp build --prod --gulpfile bin/gulpfile.babel.js",
     "server": "nodemon src/server/index.js --exec babel-node",
     "postinstall": "npm run build",
-		"test": "eslint ."
+    "test": "eslint ."
   },
   "engines": {
     "node": "6.3.0"
@@ -40,8 +40,8 @@
     "browser-sync": "^2.10.0",
     "cors": "^2.8.1",
     "del": "^2.1.0",
-    "flow-bin": "v0.35.0",
     "express": "^4.14.0",
+    "flow-bin": "v0.35.0",
     "geoip-lite": "^1.1.8",
     "gulp": "^3.8.11",
     "gulp-base64": "^0.1.2",
@@ -62,6 +62,7 @@
     "gulp-ttf2woff": "^1.0.1",
     "gulp-ttf2woff2": "^2.0.2",
     "gulp-twig": "^0.5.0",
+    "gulp-util": "^3.0.7",
     "gulp-watch": "^4.2.4",
     "imagemin-pngquant": "^4.0.0",
     "moment": "^2.16.0",
