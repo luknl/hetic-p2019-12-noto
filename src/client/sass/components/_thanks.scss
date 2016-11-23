@@ -1,98 +1,132 @@
-/**
- * <.thanks /> component style
- *
- */
-.thanks {
-
-  &__section{
+.thanks{
+  &__section {
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle, #454545 0%, #2B2B2B 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
-
-  // &__wrapper {
-  //   width: 100vw;
-  //   height: 100vh;
-  // }
-  //
-  // @include respond-to(80rem) {
-  //   width: 100vw;
-  //   height: 100vh;
-  // }
-  &__card {
-    // width: 300px;
-    @include respond-to(80rem) {
-      max-width: 1220px;
-      max-height: 600px;
-      background: white;
-      overflow: hidden;
-    }
+  &__wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
   &__img {
-    display: block;
-    width: 100%;
-    // height: 100%;
-    object-fit: cover;
+    width: 240%;
     animation: scrollup 50s linear alternate infinite;
+    @include respond-to(41.25rem) {
+      width: 140%;
+    }
+    @include respond-to(60rem) {
+      width: 100%;
+    }
   }
   &__content {
-    @include respond-to(80rem) {
-      position: absolute;
+    position: absolute;
+    top: 2.5rem;
+    left: 1.25rem;
+    @include respond-to(60rem) {
+      left: 2.5rem;
     }
   }
   &__title {
-    font-family: "Noto Sans";
-    font-size: 40px;
+    width: 18.75rem;
+    font-family: 'Noto Sans';
+    font-size: 3.75rem;
     font-weight: bold;
-    line-height: 137px;
+    line-height: 3.75rem;
     color: #FFFF3C;
-
-    @include respond-to(80rem) {
-      width: 534px;
-      font-size: 124px;
+    text-decoration: underline;
+    text-decoration-color: red;
+    @include respond-to(41.25rem) {
+      font-size: 5rem;
+      line-height: 5rem;
+      width: 25rem;
+      text-decoration: underline;
+      text-decoration-color: red;
     }
-  }
-
-  &__subtitle{
-    width: 100%;
-    font-family: "Noto Sans";
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 30px;
-    color: #FFFFFF;
-
-    @include respond-to(80rem) {
-      width: 646px;
-      height: 7.5rem;
-      font-size: 44px;
-      font-weight: bold;
-      line-height: 60px;
+    @include respond-to(60rem) {
+      width: 37.5rem;
+      font-size: 6rem;
+      line-height: 6rem;
     }
   }
 
   &__paragraph {
-    width: 653px;
-    height: 129px;
+    width: 21.875rem;
     font-family: "Noto Sans";
-    font-size: 32px;
-    text-align: center;
-    line-height: 43px;
+    font-size: 0.875rem;
     color: #FFFFFF;
 
-    @include respond-to(80rem) {
-      width: 653px;
-      height: 129px;
-      font-size: 32px;
-      line-height: 43px;
+    @include respond-to(41.25rem) {
+      width: 23.75rem;
+    }
+
+    @include respond-to(60rem) {
+      width: 26rem;
+      height: 7rem;
+      // line-height: 37px;
+      font-size: 1rem;
+    }
+  }
+
+  &__button {
+    display: block;
+    // width: 250px;
+    width: 12rem;
+    height: 2.5rem;
+    text-align: center;
+    line-height: 2.5rem;
+    background-color: white;
+    border-radius: 0.125rem;
+    text-decoration: none;
+    color: #467df8;
+    margin-top: 3.75rem;
+
+    @include respond-to(60rem) {
+      margin-top: 2.5rem;
+    }
+    &__text--italic {
+      text-transform: uppercase;
+    }
+
+    &:hover {
+      background: radial-gradient(circle, #4179F7 0%, #6392FF 100%);
+      box-shadow: 0 1px 6px 0 rgba(0,0,0,0.57);
+      color: #FFFFFF;
+    }
+  }
+
+  &__social{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    position: absolute;
+    bottom: 3.75rem;
+    right: 1.25rem;
+    width: 6.25rem;
+    height: 6.25rem;
+    &--twitter{
+      width: 2.5rem;
+      @include respond-to(60rem) {
+        width: 2.5rem;
+        bottom: 6.25rem;
+        right: 3.125rem;
+      }
+    }
+    &--google{
+      width: 3.125rem;
+      @include respond-to(41.25rem) {
+        width: 3.75rem;
+      }
+      @include respond-to(60rem) {
+        width: 3.75rem;
+      }
     }
   }
 }
-
 @keyframes scrollup {
   100%{
-    transform: translateY(-50%);
+    transform: translateY(-25%);
+    @include respond-to(60rem) {
+      transform: translateY(-50%);
+    }
   }
 }
