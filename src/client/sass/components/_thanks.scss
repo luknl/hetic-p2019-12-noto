@@ -23,7 +23,7 @@
   }
   &__content {
     position: absolute;
-    top: 2.5rem;
+    top: 10rem;
     left: 1.25rem;
     @include respond-to(60rem) {
       left: 2.5rem;
