@@ -1,0 +1,21 @@
+.space {
+  background-color: #14346A;
+  position: relative;
+  .messages {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    transform-origin: left;
+    transform: scaleX(1.01);
+    max-height: 92vh;
+    overflow-y: scroll;
+    margin: 0 auto;
+  }
+  .rooms {
+    position: absolute;
+    right: 0;
+    transform: scale(.3);
+  }
+}

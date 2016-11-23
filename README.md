@@ -19,13 +19,6 @@
 ## Make the awesome
 
 ### Install
-
-Install Yarn package manager:
-
-```
-$ npm i -g yarn
-```
-
 Just clone the repo and start :
 
 ```shell
@@ -36,11 +29,18 @@ $ yarn                          # Install Node.js components listed in ./package
 Think to install gulp in global on your desktop : `yarn global add gulp`, if this has not been done before.
 
 ### Getting started
-
 ```shell
-$ yarn start
 $ yarn run server
 ```
+This will start a Node.js server with sockets support. You can change config in the following directory : `src/shared/config`.
 
-This will start a lightweight development server (browsersync dev server) with live reloading
-and a Node.js sockets server.
+### Run dev mode
+```shell
+$ yarn start
+```
+This will start a lightweight development server (browsersync dev server) with live reloading.
+
+You need to run server in background to enable sockets support by launching following script :
+```shell
+$ yarn run server
+```

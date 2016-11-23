@@ -4,7 +4,8 @@
  */
 .main {
   display: flex;
-  min-height: 100vh;
+  position: relative;
+  min-height: 92vh;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
