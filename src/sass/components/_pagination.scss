@@ -16,6 +16,7 @@
   // Responsive notebooks (1280px)
   @include respond-to(80rem) {
     position: fixed;
+    top: -1.25rem;
     left: 0;
     flex-direction: row;
     justify-content: flex-start;
