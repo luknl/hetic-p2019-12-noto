@@ -235,15 +235,20 @@
        display: block;
        padding: .7rem;
        margin: auto;
-       background-color: white;
+       margin-top: -6.25rem;
        text-decoration: none;
        border-radius: .3rem;
        text-align: center;
        min-width: 10rem;
-     }
+       font-size: 1.25rem;
+       background-color: white;
+       transition: all ease-out 300ms;
 
-     &:hover{
-       opacity: .85;
+       &:hover {
+         color: white;
+         background-color: #222222;
+         transition: all ease-in 300ms;
+       }
      }
    }
 
