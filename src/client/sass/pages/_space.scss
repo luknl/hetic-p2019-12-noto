@@ -4,6 +4,9 @@
   background-repeat: repeat;
   background-blend-mode: overlay;
   position: relative;
+  .main {
+    padding-top: 5rem;
+  }
   .messages {
     display: flex;
     flex-flow: row wrap;

@@ -17,6 +17,8 @@ export default () => {
         letterContent = document.querySelector('.letter'),
         letterMain = document.querySelector('.letter__main'),
         letterNoto = document.querySelector('.letter__noto'),
+        letterNotoGoogle = document.querySelector('.letter__noto__google'),
+        letterDiscover = document.querySelector('.letter__discover'),
         tofu        = [],
         word        = [],
         notoLetters = ['あ', 'a', 'ה'],
@@ -210,6 +212,17 @@ export default () => {
           letterContent.style.backgroundRepeat = 'repeat'
           letterContent.style.backgroundBlendMode = 'overlay'
           letterContent.style.transition = 'background 2.7s ease'
+          setTimeout(() => {
+            letterNoto.style.transform = 'translateY(-50px)'
+            letterNoto.style.transition = 'all 1.5s ease'
+            letterNotoGoogle.style.display = 'none'
+
+            setTimeout(() => {
+            letterDiscover.style.display = 'block'
+            letterDiscover.style.transition = 'display 1.5s ease'
+            }, 1500)
+
+          }, 1000)
         }, notoLetters.length * 2500)
 
       }
