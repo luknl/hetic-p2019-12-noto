@@ -23,7 +23,7 @@
   }
   &__content {
     position: absolute;
-    top: 10rem;
+    top: 8rem;
     left: 1.25rem;
     @include respond-to(60rem) {
       left: 2.5rem;
@@ -71,12 +71,14 @@
     height: 2.5rem;
     text-align: center;
     line-height: 2.5rem;
-    background-color: white;
+    background: white;
     border-radius: 0.125rem;
     text-decoration: none;
     color: #467df8;
     margin-top: 3.75rem;
     padding-bottom: .1rem;
+    box-shadow: 0 1px 6px 0 rgba($black, .57);
+    transition: all ease-out 200ms;
     @include respond-to(60rem) {
       margin-top: 2.5rem;
     }
@@ -84,9 +86,10 @@
       text-transform: uppercase;
     }
     &:hover {
-      background: radial-gradient(circle, #4179F7 0%, #6392FF 100%);
+      background-color: #4179F7;
       box-shadow: 0 1px 6px 0 rgba($black, .57);
       color: $white;
+      transition: all ease-in 300ms;
     }
   }
   &__social{

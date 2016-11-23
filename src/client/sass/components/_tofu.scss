@@ -193,19 +193,64 @@
     align-items: center;
     color: white;
 
-    &__title {
-      font-size: 35px;
-      font-weight: 400;
-      text-shadow: 0 0 13px 0 rgba(255,255,255,0.33);
+    &__google{
+      display: flex;
+      position: absolute;
+      bottom: 20%;
+      margin-left: 20px;
+
+      @media (max-width: 500px){
+        bottom: 30%;
+        margin-left: 0;
+      }
     }
 
+     &__title {
+        font-size: 35px;
+        font-size: 10rem;
+       font-weight: 400;
+       text-shadow: 0 0 13px 0 rgba(255,255,255,0.33);
+        @media (max-width: 500px){
+          font-size: 4rem;
+        }
+      }
     &__bar {
-      width:5px;
-      height:100px;
-      border:1px solid white;
-      margin:0 55px;
-    }
-  }
+      font-size: 7rem;
+       border: 1px solid white;
+       margin: 0 55px;
+       @media (max-width: 500px){
+         margin: 0 30px;
+         font-size: 3rem;
+       }
+     }
+   }
+
+   &__discover {
+     position: absolute;
+     bottom: 40px;
+     display: none;
+     cursor: pointer;
+
+     &__button {
+       display: block;
+       padding: .7rem;
+       margin: auto;
+       margin-top: -6.25rem;
+       text-decoration: none;
+       border-radius: .3rem;
+       text-align: center;
+       min-width: 10rem;
+       font-size: 1.25rem;
+       background-color: white;
+       transition: all ease-out 300ms;
+
+       &:hover {
+         color: white;
+         background-color: #222222;
+         transition: all ease-in 300ms;
+       }
+     }
+   }
 
   // letter apparition animation
   &__animation-1 {
