@@ -170,6 +170,7 @@ io.on('connection', (socket) => {
         const { user, room } = payload
         const userId = users.findIndex(({ id }) => id === user.id)
         // From mobile
+        if (!users[userId]) return
         if (users[userId].mobileSocketId === socket.id) {
           users[userId].previousRoomId = users[userId].roomId
           users[userId].roomId = room.id
