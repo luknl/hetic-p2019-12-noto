@@ -117,7 +117,7 @@ export default class MessengerUI {
   static onTypeMessage(callback: (value: string) => void) {
     this.$messageInput.addEventListener('keyup', (e: KeyboardEvent) => {
       const { value } = e.target
-      if (value) callback(value)
+      callback(value)
     })
   }
 
