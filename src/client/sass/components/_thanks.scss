@@ -1,3 +1,6 @@
+/**
+* <.thanks /> component
+*/
 .thanks{
   &__section {
     width: 100vw;
@@ -34,13 +37,12 @@
     line-height: 3.75rem;
     color: #FFFF3C;
     text-decoration: underline;
-    text-decoration-color: red;
     @include respond-to(41.25rem) {
       font-size: 5rem;
       line-height: 5rem;
       width: 25rem;
       text-decoration: underline;
-      text-decoration-color: red;
+      margin-bottom: 1.5rem;
     }
     @include respond-to(60rem) {
       width: 37.5rem;
@@ -48,28 +50,23 @@
       line-height: 6rem;
     }
   }
-
   &__paragraph {
     width: 21.875rem;
     font-family: "Noto Sans";
     font-size: 0.875rem;
-    color: #FFFFFF;
-
+    color: $white;
+    line-height: 1.8em;
     @include respond-to(41.25rem) {
       width: 23.75rem;
     }
-
     @include respond-to(60rem) {
       width: 26rem;
       height: 7rem;
-      // line-height: 37px;
       font-size: 1rem;
     }
   }
-
   &__button {
     display: block;
-    // width: 250px;
     width: 12rem;
     height: 2.5rem;
     text-align: center;
@@ -79,21 +76,19 @@
     text-decoration: none;
     color: #467df8;
     margin-top: 3.75rem;
-
+    padding-bottom: .1rem;
     @include respond-to(60rem) {
       margin-top: 2.5rem;
     }
     &__text--italic {
       text-transform: uppercase;
     }
-
     &:hover {
       background: radial-gradient(circle, #4179F7 0%, #6392FF 100%);
-      box-shadow: 0 1px 6px 0 rgba(0,0,0,0.57);
-      color: #FFFFFF;
+      box-shadow: 0 1px 6px 0 rgba($black, .57);
+      color: $white;
     }
   }
-
   &__social{
     display: flex;
     align-items: center;
