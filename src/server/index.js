@@ -34,7 +34,42 @@ const {
 
 // Initialyze rooms, messages and users
 const rooms = [{ id: 0, name: 'Main' }]
-const messages = {[0]: []}
+const messages = { [0]: [{
+  value: 'صباح الخير',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'ar', // arabic
+}, {
+  value: 'שלום',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'hb', // hebrew
+}, {
+  value: 'bonjour',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'fr', // france
+}, {
+  value: 'hello',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'en', // english
+}, {
+  value: 'привет',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'ru', // russian
+}, {
+  value: 'χαίρω',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'cy', // cypriot
+}, {
+  value: 'もしもし',
+  roomId: 0,
+  createAt: new Date(),
+  country: 'ja', // japanese
+}] }
 const users = []
 
 io.on('connection', (socket) => {

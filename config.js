@@ -17,6 +17,10 @@ export default {
     formats: 'woff woff2',
     custom: {
       'Noto Sans': [400, 700],
+      'Noto Naskh Arabic': [400],
+      'Noto Sans CJKjp': [400],
+      'Noto Sans Cypriot': [400],
+      'Noto Sans Hebrew': [400],
     },
   },
   css: {

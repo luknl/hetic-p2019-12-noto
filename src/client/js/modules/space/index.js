@@ -2,16 +2,25 @@
 
 import moment from 'moment'
 import io from 'socket.io-client'
+import loadCSS from 'fg-loadcss'
 import { flag } from 'country-code-emoji'
 import { SOCKET_URL } from '@shared/config'
+import { isMobile } from  '@helpers/browser'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
+import { getFontFamily } from '@helpers/fonts'
 
 export default () => {
 
+    // If user is on desktop, redirect it to space page
+    if (isMobile()) window.location.href = 'messenger.html'
+
     // Initialyze sockets
     const socket = io(SOCKET_URL)
+
+    // Load all fonts in async
+    loadCSS.loadCSS('./../css/allfonts.css')
 
     // Get actions and actionTypes
     const { joinRoom, generateUser, ...actionTypes } = actions
@@ -22,6 +31,7 @@ export default () => {
     const $user: HTMLElement = document.querySelector('.user')
     const $userId: HTMLElement = document.querySelector('#user_id')
     const $writers: HTMLElement = document.querySelector('.writers')
+    const $splash: HTMLElement = document.querySelector('.splash')
 
     // Initialyze colors
     const COLORS: Array<string> = ['#457DF3', '#FC1B1F', '#1AB05A', '#FDBD2C']
@@ -58,11 +68,12 @@ export default () => {
         case actionTypes.ADD_USER: {
           if (!state.user) {
             const { user } = payload
-            $user.innerHTML = `
-              <li>userId: ${user.id}</li>
-              <li>roomId: ${user.roomId}</li>
-            `
+            // $user.innerHTML = `
+            //   <li>userId: ${user.id}</li>
+            //   <li>roomId: ${user.roomId}</li>
+            // `
             $userId.innerHTML = `${user.id}`
+            $splash.innerHTML = `${state.rooms[user.roomId].name}`
             state.user = user
           }
           break
@@ -80,7 +91,12 @@ export default () => {
           const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML += `
             <li
-              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="
+                background-color: ${randomColor};
+                font-size: ${message.value.length <= 6 ? 1.7 : .7}rem;
+                margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+                font-family: ${getFontFamily(message.country)};
+              "
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
@@ -101,7 +117,12 @@ export default () => {
           // Display all message on wall
           $messages.innerHTML = messages.map((message) => `
             <li
-              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="
+                background-color: ${COLORS[Math.floor(Math.random() * 4)]};
+                font-size: ${message.value.length <= 6 ? 1.7 : .7}rem;
+                margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+                font-family: ${getFontFamily(message.country)};
+              "
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
@@ -122,9 +143,9 @@ export default () => {
           // Display all rooms on wall
           const { rooms } = payload
           state.rooms = rooms
-          $rooms.innerHTML = rooms.map((room) => `
-            <div id="${room.id}" class="room">${room.name}</div>
-          `).join('')
+          // $rooms.innerHTML = rooms.map((room) => `
+          //   <div id="${room.id}" class="room">${room.name}</div>
+          // `).join('')
           return
         }
 
@@ -134,11 +155,13 @@ export default () => {
          */
         case actionTypes.CREATE_ROOM: {
           const { room } = payload
-          $rooms.innerHTML += `
-            <div id="${room.id}" class="room">
-              ${room.name}
-            </div>
-          `
+          // state.rooms.push
+          // $rooms.innerHTML += `
+          //   <div id="${room.id}" class="room">
+          //     ${room.name}
+          //   </div>
+          // `
+          $splash.innerHTML = `${room.name}`
           break
         }
 
@@ -153,14 +176,16 @@ export default () => {
           // Update state and UI
           state.user.roomId = user.roomId
           $messages.innerHTML += ''
-          $user.innerHTML = `
-            <li>id: ${user.id}</li>
-            <li>roomId: ${user.roomId}</li>
-          `
+          // $user.innerHTML = `
+          //   <li>id: ${user.id}</li>
+          //   <li>roomId: ${user.roomId}</li>
+          // `
+          $splash.innerHTML = `${room.name}`
           break
         }
 
         case actionTypes.START_TYPING: {
+          document.querySelector('.modal').style.display = 'none'
           const { user } = payload
           if (!state.countries[user.language] ||!document.querySelector(`#${user.language}`)) {
             state.countries[user.language] = { count: 1 }
