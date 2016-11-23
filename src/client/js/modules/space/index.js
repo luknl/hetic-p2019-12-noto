@@ -2,12 +2,14 @@
 
 import moment from 'moment'
 import io from 'socket.io-client'
+import loadCSS from 'fg-loadcss'
 import { flag } from 'country-code-emoji'
 import { SOCKET_URL } from '@shared/config'
 import { isMobile } from  '@helpers/browser'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
+import { getFontFamily } from '@helpers/fonts'
 
 export default () => {
 
@@ -16,6 +18,9 @@ export default () => {
 
     // Initialyze sockets
     const socket = io(SOCKET_URL)
+
+    // Load all fonts in async
+    loadCSS.loadCSS('./../css/allfonts.css')
 
     // Get actions and actionTypes
     const { joinRoom, generateUser, ...actionTypes } = actions
@@ -54,7 +59,6 @@ export default () => {
      * helper
      */
     watch(({ type, payload }) => {
-      console.log({ type, payload })
       switch (type) {
 
         /**
@@ -85,7 +89,12 @@ export default () => {
           const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML += `
             <li
-              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 1.7 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="
+                background-color: ${randomColor};
+                font-size: ${message.value.length <= 6 ? 1.7 : .7}rem;
+                margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+                font-family: ${getFontFamily(message.country)};
+              "
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
@@ -106,7 +115,12 @@ export default () => {
           // Display all message on wall
           $messages.innerHTML = messages.map((message) => `
             <li
-              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 1.7 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="
+                background-color: ${COLORS[Math.floor(Math.random() * 4)]};
+                font-size: ${message.value.length <= 6 ? 1.7 : .7}rem;
+                margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+                font-family: ${getFontFamily(message.country)};
+              "
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
