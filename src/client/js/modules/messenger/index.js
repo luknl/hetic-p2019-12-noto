@@ -22,11 +22,6 @@ export default () => {
   // Initialyze sockets
   const socket = io(SOCKET_URL)
 
-  // Select DOM elements
-  const $messageForm: HTMLElement = document.querySelector('.popup__form--message')
-  const $messageInput: HTMLInputElement = $messageForm.querySelector('input')
-  const $rooms: HTMLElement = document.querySelector('.rooms')
-
   // Set initial state
   type State = { user?: User, rooms: Array<Room> }
   const state: State = { rooms: [] }
@@ -41,6 +36,7 @@ export default () => {
   })
 
   // Add popup support
+  MessengerUI.runPopup()
   MessengerUI.onPressController((name) => {
     MessengerUI.openPopup(name)
   })
@@ -48,6 +44,7 @@ export default () => {
   // Create a room
   MessengerUI.onCreateRoom((value) => {
     dispatch(initializeRoom(value))(socket)
+    MessengerUI.closePopup('room')
   })
 
   // Send a message
@@ -58,31 +55,26 @@ export default () => {
     const message = { value, roomId, createAt: new Date(), country }
     // Send it to server
     dispatch(sendMessage(message))(socket)
+    // Update UI
     MessengerUI.resetMessageInput()
+    MessengerUI.closePopup('message')
   })
 
 
-  /**
-   * Join room
-   */
-  $rooms.addEventListener('click', (e: Event) => {
-    e.preventDefault()
-    if (!e.target || !e.target.id) return
-    const roomId = parseInt(e.target.id)
+  // Join room
+  MessengerUI.onJoinRoom((roomId) => {
     const { user } = state
     const room = state.rooms.find(({ id }) => id === roomId)
     if (!room) return
     if (!state.user || !user) return
     state.user.roomId = roomId
     dispatch(joinRoom(room, state.user))(socket)
+    MessengerUI.activeRoom(roomId)
   })
 
-  /**
-   * Send user typing
-   */
+  // Send user typing
   let writing = false
-  $messageInput.addEventListener('keyup', () => {
-    const { value } = $messageInput
+  MessengerUI.onTypeMessage((value) => {
     const { user } = state
     if (!user) return
     if (!writing && value !== '') {
@@ -93,7 +85,6 @@ export default () => {
       dispatch(stopTyping(user))(socket)
     }
   })
-
 
 
   /**
@@ -111,6 +102,7 @@ export default () => {
         // Server returns an error
         if (!user) return MessengerUI.displayLoginError('Error, please retry !')
         // Save user
+        MessengerUI.activeRoom(user.roomId)
         MessengerUI.removeLoginForm()
         state.user = user
         break
@@ -121,7 +113,7 @@ export default () => {
         // Display all rooms
         const { rooms } = payload
         state.rooms = rooms
-        MessengerUI.addRooms(rooms)
+        MessengerUI.addRooms(state.user, rooms)
         break
       }
 
@@ -132,6 +124,7 @@ export default () => {
         const { id } = state.user
         if (id && user.id !== id) return
         state.user.roomId = user.roomId
+        MessengerUI.activeRoom(user.roomId)
         break
       }
 
@@ -139,7 +132,7 @@ export default () => {
       case actionTypes.CREATE_ROOM: {
         const { room } = payload
         state.rooms.push(room)
-        MessengerUI.addRoom(room)
+        MessengerUI.addRoom(state.user, room)
         break
       }
 

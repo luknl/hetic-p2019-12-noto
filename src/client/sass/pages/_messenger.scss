@@ -2,7 +2,6 @@
  * "messenger" page
  */
 .messenger {
-  overflow: hidden;
   background: radial-gradient(circle, #757575 0%, #164582 100%);
   .rooms {
     display: flex;
@@ -10,9 +9,20 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 3rem 0;
+    padding: 2rem 0 13rem;
     .room + .room {
-      margin-top: 2.5rem;
+      margin-top: 2rem;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    span {
+      color: $white;
+      margin-bottom: 1.5rem;
+      opacity: .5;
     }
   }
 }

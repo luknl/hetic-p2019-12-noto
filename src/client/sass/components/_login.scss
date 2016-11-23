@@ -3,6 +3,13 @@
  *
  */
 .login {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  max-height: 100vh;
   &.is-hidden {
     opacity: 0;
     pointer-events: none;
@@ -19,7 +26,7 @@
   &__form {
     position: absolute;
     padding: 2.5rem 1rem 1rem;
-    margin-top: -3rem;
+    margin-top: -1rem;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);

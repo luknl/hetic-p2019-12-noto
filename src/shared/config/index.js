@@ -1,3 +1,3 @@
 /* @flow */
 
-export const SOCKET_URL = 'http://192.168.137.250:8080'
+export const SOCKET_URL = 'http://192.168.3.64:8080'

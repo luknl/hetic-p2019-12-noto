@@ -3,14 +3,19 @@
  *
  */
 .popup {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 10;
   opacity: 1;
+  max-height: 100vh;
   transition: ease .2s opacity;
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
   &::before {
     content: '';
     display: block;
@@ -28,14 +33,23 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: -3rem;
+    margin-top: -1rem;
     top: 50%; left: 50%;
     width: 22rem;
-    padding: 2rem 1rem;
+    padding: 1.25rem 1rem 2rem;
     transform: translate(-50%, -50%);
     background-color: $white;
     border-radius: .25rem;
     box-shadow: 0 .25rem .5rem rgba($black, .25);
+    transition: ease transform .2s;
+  }
+  &.is-hidden &__wrapper {
+    transform: translate(-50%, 0%);
+  }
+  &__close {
+    text-decoration: underline;
+    margin-bottom: 1rem;
+    opacity: .5;
   }
   &__title {
     display: block;
@@ -71,9 +85,5 @@
     &--add {
       background-image: image-url('add.svg');
     }
-  }
-  &.is-hidden {
-    opacity: 0;
-    pointer-events: none;
   }
 }

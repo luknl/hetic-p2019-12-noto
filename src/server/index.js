@@ -16,7 +16,7 @@ app.use(compression()) // Enable GZIP
 app.use(
   express.static(
     __dirname + '/../../dist',
-     { maxAge: 86400000 }, // Cache content one day
+    { maxAge: 86400000 }, // Cache content one day
   ),
 )
 http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
@@ -152,7 +152,7 @@ io.on('connection', (socket) => {
         users[userId].previousRoomId = users[userId].roomId
         users[userId].roomId = roomId
         const user = users[userId]
-        socket.leave(room.roomId)
+        socket.leave(user.roomId)
         socket.join(roomId)
         // Call clients
         dispatch(
