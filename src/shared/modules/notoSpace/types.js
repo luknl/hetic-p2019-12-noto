@@ -4,6 +4,7 @@ export type Message = {
   value: string,
   roomId: number,
   createAt: Date,
+  country: string,
 }
 
 export type User = {
@@ -11,6 +12,7 @@ export type User = {
   roomId: number,
   previousRoomId?: number,
   isConnected: boolean,
+  language?: string,
 }
 
 export type Room = {

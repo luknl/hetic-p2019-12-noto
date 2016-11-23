@@ -1,0 +1,89 @@
+/**
+ * <.popup /> component style
+ *
+ */
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  opacity: 1;
+  max-height: 100vh;
+  transition: ease .2s opacity;
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($black, .75)
+  }
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -1rem;
+    top: 50%; left: 50%;
+    width: 22rem;
+    padding: 1.25rem 1rem 2rem;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    border-radius: .25rem;
+    box-shadow: 0 .25rem .5rem rgba($black, .25);
+    transition: ease transform .2s;
+  }
+  &.is-hidden &__wrapper {
+    transform: translate(-50%, 0%);
+  }
+  &__close {
+    text-decoration: underline;
+    margin-bottom: 1rem;
+    opacity: .5;
+  }
+  &__title {
+    display: block;
+    color: $black;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  &__input {
+    margin: 1.25rem 0 1rem;
+    border: 1.5px solid rgba($brandColor, .25);
+    border-radius: .25rem;
+    padding: 1rem .675rem;
+    text-align: center;
+    font-size: 1.125rem;;
+    color: $brandColor;
+    &::placeholder {
+      color: rgba($brandColor, .25);
+    }
+  }
+  &__button {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background-color: rgb(232, 209, 58);
+    background-size: 1.5rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .125);
+    &--messenger {
+      background-image: image-url('messenger.svg');
+    }
+    &--add {
+      background-image: image-url('add.svg');
+    }
+  }
+}

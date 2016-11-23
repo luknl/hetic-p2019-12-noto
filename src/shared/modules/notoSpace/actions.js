@@ -8,7 +8,9 @@ export const ADD_USER = 'ADD_USER'
 export const JOIN_ROOM = 'JOIN_ROOM'
 export const LEAVE_ROOM = 'LEAVE_ROOM'
 export const CREATE_ROOM = 'CREATE_ROOM'
+export const STOP_TYPING = 'STOP_TYPING'
 export const CONNECT_USER = 'CONNECT_USER'
+export const START_TYPING = 'START_TYPING'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const GENERATE_USER = 'GENERATE_USER'
 export const GET_ALL_ROOMS = 'GET_ALL_ROOMS'
@@ -40,6 +42,11 @@ export const createRoom = (room: Room): Action => ({
   payload: { room },
 })
 
+export const stopTyping = (user: User): Action => ({
+  type: STOP_TYPING,
+  payload: { user },
+})
+
 export const connectUser = (userId: number): Action => ({
   type: CONNECT_USER,
   payload: { userId },
@@ -50,9 +57,14 @@ export const sendMessage = (message: Message): Action => ({
   payload: { message },
 })
 
-export const generateUser = (): Action => ({
+export const startTyping = (user: User): Action => ({
+  type: START_TYPING,
+  payload: { user },
+})
+
+export const generateUser = (language: string): Action => ({
   type: GENERATE_USER,
-  payload: {},
+  payload: { language },
 })
 
 export const getAllRooms = (rooms: Array<Room>): Action => ({
