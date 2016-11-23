@@ -1,0 +1,98 @@
+/**
+ * <.thanks /> component style
+ *
+ */
+.thanks {
+
+  &__section{
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #454545 0%, #2B2B2B 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // &__wrapper {
+  //   width: 100vw;
+  //   height: 100vh;
+  // }
+  //
+  // @include respond-to(80rem) {
+  //   width: 100vw;
+  //   height: 100vh;
+  // }
+  &__card {
+    // width: 300px;
+    @include respond-to(80rem) {
+      max-width: 1220px;
+      max-height: 600px;
+      background: white;
+      overflow: hidden;
+    }
+  }
+  &__img {
+    display: block;
+    width: 100%;
+    // height: 100%;
+    object-fit: cover;
+    animation: scrollup 50s linear alternate infinite;
+  }
+  &__content {
+    @include respond-to(80rem) {
+      position: absolute;
+    }
+  }
+  &__title {
+    font-family: "Noto Sans";
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 137px;
+    color: #FFFF3C;
+
+    @include respond-to(80rem) {
+      width: 534px;
+      font-size: 124px;
+    }
+  }
+
+  &__subtitle{
+    width: 100%;
+    font-family: "Noto Sans";
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #FFFFFF;
+
+    @include respond-to(80rem) {
+      width: 646px;
+      height: 7.5rem;
+      font-size: 44px;
+      font-weight: bold;
+      line-height: 60px;
+    }
+  }
+
+  &__paragraph {
+    width: 653px;
+    height: 129px;
+    font-family: "Noto Sans";
+    font-size: 32px;
+    text-align: center;
+    line-height: 43px;
+    color: #FFFFFF;
+
+    @include respond-to(80rem) {
+      width: 653px;
+      height: 129px;
+      font-size: 32px;
+      line-height: 43px;
+    }
+  }
+}
+
+@keyframes scrollup {
+  100%{
+    transform: translateY(-50%);
+  }
+}
