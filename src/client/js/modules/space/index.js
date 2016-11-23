@@ -20,6 +20,7 @@ export default () => {
     const $messages: HTMLElement = document.querySelector('.messages')
     const $rooms: HTMLElement = document.querySelector('.rooms')
     const $user: HTMLElement = document.querySelector('.user')
+    const $userId: HTMLElement = document.querySelector('#user_id')
     const $writers: HTMLElement = document.querySelector('.writers')
 
     // Initialyze colors
@@ -62,6 +63,7 @@ export default () => {
               <li>userId: ${user.id}</li>
               <li>roomId: ${user.roomId}</li>
             `
+            $userId.innerHTML = `${user.id}`
             state.user = user
           }
           break

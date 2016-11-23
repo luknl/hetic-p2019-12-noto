@@ -16,6 +16,7 @@
   color: white;
   text-align: right;
   line-height: 1rem;
+  word-break: break-all;
   &:before {
     content: '';
     position: absolute;
