@@ -19,11 +19,12 @@
 @import "utils/mixins";
 
 @import "base/reset";
+@import "base/animation";
 @import "base/body";
-@import "base/typography";
 @import "base/buttons";
 @import "base/form";
 @import "base/list";
+@import "base/typography";
 
 @import "components/controller";
 @import "components/header";
@@ -31,6 +32,7 @@
 @import "components/login";
 @import "components/nav";
 @import "components/main";
+@import "components/tofu";
 @import "components/thanks";
 @import "components/popup";
 @import "components/message";

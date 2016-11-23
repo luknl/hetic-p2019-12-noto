@@ -11,6 +11,7 @@ export default {
     jsDir: 'js/',
     sassDir: 'sass/',
     fontsDir: 'fonts/',
+    soundDir: 'sounds/',
   },
   fonts: {
     formats: 'woff woff2',

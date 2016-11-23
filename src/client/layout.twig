@@ -10,19 +10,21 @@
   <link rel="stylesheet" href="css/allfonts.css">
 </head>
 <body class="{{page}}">
-  <header class="header">
-    <a class="header__logo" href="index.html">
-      <img src="img/logo.svg" alt="Noto by Google" />
-    </a>
-    <nav class="nav">
-      <ul class="nav__list">
-        <li class="nav__item"><a class="nav__link" href="storytelling.html">Introducing Noto</a></li>
-        <li class="nav__item"><a class="nav__link" href="thanks.html">Credits</a></li>
-        <li class="nav__item"><a class="nav__link is-active" href="space.html">Space</a></li>
-        <li class="nav__item"><a target="_blank" class="nav__link nav__link--button" href="https://www.google.com/get/noto/">Download</a></li>
-      </ul>
-    </nav>
-  </header>
+  {% if page != "homepage" %}
+    <header class="header">
+      <a class="header__logo" href="index.html">
+        <img src="img/logo.svg" alt="Noto by Google" />
+      </a>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__item"><a class="nav__link" href="storytelling.html">Introducing Noto</a></li>
+          <li class="nav__item"><a class="nav__link" href="thanks.html">Credits</a></li>
+          <li class="nav__item"><a class="nav__link is-active" href="space.html">Space</a></li>
+          <li class="nav__item"><a target="_blank" class="nav__link nav__link--button" href="https://www.google.com/get/noto/">Download</a></li>
+        </ul>
+      </nav>
+    </header>
+  {% endif %}
   <main class="main">
     {% block main %}{% endblock %}
   </main>
