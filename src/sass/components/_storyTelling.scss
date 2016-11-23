@@ -75,7 +75,6 @@
   }
 
   &__content {
-    // border: thin solid red;
     height: 60%;
     padding: 0 1.5625rem;
 
@@ -83,12 +82,17 @@
     @include respond-to(80rem) {
       min-height: 100vh;
       flex: 1;
-      padding: 13.75rem 1.5625rem 0 13.4375rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 13.4375rem;
+      padding-right: 1.5625rem;
     }
 
     // Responsive laptops (1600px)
     @include respond-to(100rem) {
-      padding-top: 7.8125rem;
+      margin-top: -12.5rem;
     }
   }
 
@@ -353,7 +357,7 @@
   &__section:nth-of-type(2) {
     .storyTelling__content {
       padding-top: 0.625rem;
-      
+
       // Responsive notebooks (1280px)
       @include respond-to(80rem) {
         min-height: auto;

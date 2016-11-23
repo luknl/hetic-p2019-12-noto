@@ -55,26 +55,6 @@
     &.is-active {
       opacity: 1;
 
-      &::before {
-        position: absolute;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        width: 100vw;
-        content: attr(data-title);
-        font-size: 0.8125rem;
-        letter-spacing: 0.1875rem;
-        text-transform: uppercase;
-        color: #FFFFFF;
-        margin-top: 0.75rem;
-
-        // Responsive notebooks (1280px)
-        @include respond-to(80rem) {
-          width: 12.5rem;
-          margin-left: 20px;
-        }
-      }
-
       // Responsive notebooks (1280px)
       @include respond-to(80rem) {
         background: transparent;
