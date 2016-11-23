@@ -1,0 +1,19 @@
+{# notoboard.twig #}
+{% extends "layout.twig" %}
+{% set page = 'space' %}
+
+{% block main %}
+  <div class="splash">NotoSpace</div>
+  <ul class="messages"></ul>
+  <div class="rooms"></div>
+  <ul class="user"></ul>
+  <ul class="writers"></ul>
+  <div class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__content">
+      <div class="modal__description">Please enter this URL on you smartphone :<br><strong>noto.space/messenger.html</strong></div>
+      <div class="modal__description">The code is :<br><strong id="user_id">    </strong></div>
+      <div class="modal__button" onclick="document.querySelector('.modal').style.display = 'none'">OK</div>
+    </div>
+  </div>
+{% endblock %}

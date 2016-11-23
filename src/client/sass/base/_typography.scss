@@ -1,0 +1,24 @@
+// Establish font-size
+html {
+  font-size: calc(95% + .15vw);
+  @include respond-to('small') {
+    font-size: calc(112.5% + .15vw);
+  }
+}
+
+// Establish default font-family and line-height
+body {
+  font-family: 'Noto Sans', 'Verdana', 'Geneva', sans-serif;
+  line-height: 1.75em;
+}
+
+// Establish headings size
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+// Establish content style
+p {
+  margin: 1rem 0;
+}

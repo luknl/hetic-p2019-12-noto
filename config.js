@@ -1,16 +1,16 @@
 export default {
   server: {
-    port: 8000
+    port: 8000,
   },
   dir: {
-    srcDir: __dirname + '/src/',
+    srcDir: __dirname + '/src/client/',
     buildDir: __dirname + '/__build__/',
     distDir: __dirname + '/dist/',
     cssDir: 'css/',
     imgDir: 'img/',
     jsDir: 'js/',
     sassDir: 'sass/',
-    fontsDir: 'fonts/'
+    fontsDir: 'fonts/',
   },
   fonts: {
     formats: 'woff woff2',
@@ -19,9 +19,9 @@ export default {
     },
   },
   css: {
-    autoprefixer: ['last 10 versions']
+    autoprefixer: ['last 10 versions'],
   },
   javascript: {
-    babel: { presets: ['es2015', 'stage-2'] }
-  }
+    babel: { presets: ['es2015', 'stage-2'] },
+  },
 }

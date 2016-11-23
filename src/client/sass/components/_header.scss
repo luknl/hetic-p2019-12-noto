@@ -1,0 +1,19 @@
+/**
+ * <.header /> component
+ */
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1.125rem 1rem 0;
+  width: 100vw;
+  background-color: $white;
+  box-shadow: 0 2px 4px 0 rgba($black, .5);
+  @include respond-to(43.75rem) { // 700px
+    flex-direction: row;
+    &__logo {
+      position: relative;
+      top: .0625rem;
+    }
+  }
+}
