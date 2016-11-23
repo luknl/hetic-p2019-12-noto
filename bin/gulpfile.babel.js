@@ -20,7 +20,6 @@ import cache from 'gulp-cached'
 import del from 'del'
 import gulp  from 'gulp'
 import gulpIf  from 'gulp-if'
-import gulpFilter  from 'gulp-filter'
 import imagemin  from 'gulp-imagemin'
 import named from 'vinyl-named'
 import path from 'path'
@@ -28,7 +27,6 @@ import pngquant  from 'imagemin-pngquant'
 import postcss  from 'gulp-postcss'
 import rev from 'gulp-rev'
 import revReplace from 'gulp-rev-replace'
-import rewriteCSS from 'gulp-rewrite-css'
 import runSequence from 'run-sequence'
 import sass  from 'gulp-sass'
 import sourcemaps  from 'gulp-sourcemaps'
@@ -59,7 +57,12 @@ gulp.task('browser_sync', () => {
       destDir + imgDir + '*',
       destDir + jsDir + '*.js'
     ],
-    port: config.server.port
+    port: config.server.port,
+    ghostMode: {
+      clicks: false,
+      forms: false,
+      scroll: true,
+    }
   })
 })
 
@@ -67,7 +70,6 @@ gulp.task('browser_sync', () => {
 
 // Sass
 gulp.task('sass', () => {
-  const filter = gulpFilter('critical.css', { restore: true })
   let customFonts = {},
       weights = [],
       fonts = config.fonts.custom
@@ -85,7 +87,7 @@ gulp.task('sass', () => {
     fonts[font].map(weight => {
       let url = {}
       config.fonts.formats.split(' ').map(format => {
-        url[format] = `./${production ? '' : '../'}fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
+        url[format] = `../${production ? '' : '../'}fonts/${font.replace(/\s+/g, '')}/${font.replace(/\s+/g, '')}-${weights[weight]}.${format}`
       })
       customFonts[font]['variants'][weight] = {
         [weight]: { url: url }
@@ -100,17 +102,12 @@ gulp.task('sass', () => {
         browsers: config.css.autoprefixer
       })
     ]))
-    .pipe(filter)
-    .pipe(gulpIf(production, rewriteCSS({
-      destination: srcDir
-    }, true)))
     .pipe(postcss([
       require('postcss-font-magician')({
         custom: customFonts,
         formats: config.fonts.formats
       })
     ]))
-    .pipe(filter.restore)
     .pipe(gulpIf(dev, cssbeautify()))
     .pipe(gulpIf(dev, sourcemaps.write('.')))
     .pipe(gulpIf(production, base64({ extensions: ['svg', 'png', 'jpg'], maxImageSize: 8*1024})))
@@ -118,7 +115,6 @@ gulp.task('sass', () => {
     .pipe(cache('sass'))
     .pipe(gulp.dest(destDir + cssDir))
 })
-
 
 
 // Babel
@@ -154,10 +150,13 @@ gulp.task('js', () => (
         }]
       },
       plugins: [
+        new webpack.DefinePlugin({
+          'NODE_ENV': process.env.NODE_ENV || 'development',
+        }),
         new webpack.NoErrorsPlugin()
       ].concat(production
         ? [new webpack.optimize.UglifyJsPlugin()]
-        : [new webpack.NoErrorsPlugin()]
+        : []
       )
     }))
     .on('error', (err) => {

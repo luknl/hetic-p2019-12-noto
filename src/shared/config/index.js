@@ -1,3 +1,3 @@
 /* @flow */
 
-export const SOCKET_URL = 'https://desolate-thicket-62267.herokuapp.com'
+export const SOCKET_URL = 'http://www.noto.space'

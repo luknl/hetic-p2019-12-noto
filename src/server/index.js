@@ -3,6 +3,7 @@
 import express from 'express'
 import cors from 'cors'
 import httpServer from 'http'
+import compression from 'compression'
 import * as actions from './../shared/modules/notoSpace/actions'
 import { dispatch, watch } from './../shared/helpers/socket'
 
@@ -11,7 +12,13 @@ const app = express()
 const http = httpServer.Server(app)
 const port = process.env.PORT || 8080
 app.use(cors())
-app.use(express.static(__dirname + '/../../dist'))
+app.use(compression()) // Enable GZIP
+app.use(
+  express.static(
+    __dirname + '/../../dist',
+    { maxAge: 86400000 }, // Cache content one day
+  ),
+)
 http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
 
 // Initialyze sockets
@@ -21,12 +28,12 @@ const io = require('socket.io')(http)
 const {
   getAllMessages, sendMessage,
   getUser, addUser,
-  createRoom, joinRoom, getAllRooms,
+  createRoom, joinRoom, getAllRooms, stopTyping, startTyping,
   ...actionTypes,
 } = actions
 
 // Initialyze rooms, messages and users
-const rooms = [{ id: 0, name: 'main' }]
+const rooms = [{ id: 0, name: 'Main' }]
 const messages = {[0]: []}
 const users = []
 
@@ -55,6 +62,8 @@ io.on('connection', (socket) => {
        * Generate a new user
        */
       case actionTypes.GENERATE_USER: {
+        // Get language
+        const { language } = payload
         // Generate unsed ID
         let userId = Math.floor(Math.random() * 1000)
         while (users.find(({ id }) => id === userId)) {
@@ -67,6 +76,7 @@ io.on('connection', (socket) => {
           desktopSocketId: socket.id,
           mobileSocketId: null,
           isConnected: false,
+          language,
         }
         users.push(user)
         socket.join(defaultRoomId)
@@ -142,7 +152,7 @@ io.on('connection', (socket) => {
         users[userId].previousRoomId = users[userId].roomId
         users[userId].roomId = roomId
         const user = users[userId]
-        socket.leave(room.roomId)
+        socket.leave(user.roomId)
         socket.join(roomId)
         // Call clients
         dispatch(
@@ -160,6 +170,7 @@ io.on('connection', (socket) => {
         const { user, room } = payload
         const userId = users.findIndex(({ id }) => id === user.id)
         // From mobile
+        if (!users[userId]) return
         if (users[userId].mobileSocketId === socket.id) {
           users[userId].previousRoomId = users[userId].roomId
           users[userId].roomId = room.id
@@ -171,7 +182,27 @@ io.on('connection', (socket) => {
           socket.join(user.roomId)
           dispatch(getAllMessages(messages[user.roomId]))(socket)
         }
+        break
       }
+
+
+      /**
+       * Send to desktop user who's writing
+       */
+       case actionTypes.START_TYPING: {
+         const { user } = payload
+         dispatch(startTyping(user))(io, { to: user.roomId })
+         break
+       }
+
+      /**
+       * Send to desktop user who stopped writing
+       */
+       case actionTypes.STOP_TYPING: {
+         const { user } = payload
+         dispatch(stopTyping(user))(io, { to: user.roomId })
+         break
+       }
 
     }
 

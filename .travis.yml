@@ -1,6 +1,8 @@
 language: node_js
 
-sudo: false
+compiler: gcc
+
+sudo: true
 
 node_js:
   - "node"
