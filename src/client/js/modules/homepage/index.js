@@ -26,6 +26,7 @@ export default () => {
   let   i        = 0, // incrementator for each character
         revealed = false, // check if all characters have been revealed
         fired    = false
+
   // animating title on page start
   tofuTitle.style.letterSpacing = '0px'
   tofuTitle.style.opacity = '1'
@@ -73,7 +74,6 @@ export default () => {
 
       // triger following events only once while pressing spacebar
       if(!fired) {
-        console.log('space down!')
         fired = true
         // play the audio while space bar is down
         audio.play()
@@ -112,7 +112,6 @@ export default () => {
     // when user relase the spacebar
       addEventListeners(mobile ? tofuSpaceBarFill : body, [mobile ? 'touchend' : 'keyup'], (e) => {
       if (e.keyCode === 32 || mobile) {
-        console.log('space up')
         fired = false
 
         // restore dom in the initial state
