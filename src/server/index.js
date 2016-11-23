@@ -16,7 +16,7 @@ app.use(compression()) // Enable GZIP
 app.use(
   express.static(
     __dirname + '/../../dist',
-    { maxAge: 86400000 }, // Cache content one day
+    { maxAge: 10 }, // Cache content one day
   ),
 )
 http.listen(port, () => console.log('listening on ' + port + ' 😎 💪'))
