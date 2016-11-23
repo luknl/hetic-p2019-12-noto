@@ -3,6 +3,35 @@
 {% set page = 'messenger' %}
 
 {% block main %}
+  <span class="label">today</span>
+  <div class="rooms">
+    <span>Select a room :</span>
+    <div></div>
+  </div>
+  <div class="popup popup--message is-hidden">
+    <div class="popup__wrapper">
+      <a role="button" class="popup__close">Close</a>
+      <form class="popup__form popup__form--message">
+        <span class="popup__title">Write your message</span>
+        <input class="popup__input" type="input" name="name" placeholder="Hello ..." maxlength="140">
+        <button class="popup__button popup__button--messenger" type="submit"></button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup--room is-hidden">
+    <div class="popup__wrapper">
+      <a role="button" class="popup__close">Close</a>
+      <form class="popup__form popup__form--room">
+        <span class="popup__title">Create a room</span>
+        <input class="popup__input" type="input" name="name" placeholder="Be creative !" maxlength="10">
+        <button class="popup__button popup__button--add" type="submit"></button>
+      </form>
+    </div>
+  </div>
+  <div class="controller">
+    <button type="button" class="controller__button" id="room" name="button">Create a room</button>
+    <button type="button" class="controller__button" id="message" name="button">Send a message</button>
+  </div>
   <div class="login">
     <div class="login__overlay"></div>
     <form action="" class="login__form">
@@ -12,16 +41,4 @@
       <span class="login__error"></span>
     </form>
   </div>
-  <span class="label">today</span>
-  <div class="rooms"></div>
-
-  <form class="message" action="">
-    <label for="message__input">Send Message</label>
-    <input id="message__input" class="input message__input" autocomplete="off" /><button>Send</button>
-  </form>
-  <form action="" class="room__form">
-    <label for="room__input">Create Room</label>
-    <input id="room__input" class="input room__input" autocomplete="off" /><button>Send</button>
-  </form>
-  <ul class="user"></ul>
 {% endblock %}

@@ -1,0 +1,28 @@
+/**
+ * <.controller /> component style
+ *
+ */
+.controller {
+  display: flex;
+  flex: 1;
+  position: fixed;
+  bottom: 0;
+  z-index: 9;
+  padding: 1.125rem .975em;
+  width: 100vw;
+  flex-direction: column;
+  background-color: $brandColor;
+  &__button {
+    width: 100%;
+    padding: 1rem;
+    border-radius: .25rem;
+    border: 1.5px solid $white;
+    color: $white;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    & + & {
+      margin-top: .75rem;
+    }
+  }
+}

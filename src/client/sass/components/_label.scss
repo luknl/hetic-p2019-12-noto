@@ -3,7 +3,6 @@
  */
 .label {
   position: absolute;
-  margin-top: 2rem;
   top: 50%;
   left: 50%;
   transform-origin: 50% 50%;
@@ -12,6 +11,7 @@
   text-transform: uppercase;
   font-weight: 700;
   line-height: 1em;
-  color: rgba($white, .122);
-  z-index: 2;
+  color: rgba($white, .125);
+  z-index: -1;
+  pointer-events: none;
 }
