@@ -39,7 +39,7 @@ import webpackStream  from 'webpack-stream'
 import { argv } from 'yargs'
 import config from './../config.js'
 
-const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir } = config.dir
+const { srcDir, buildDir, distDir, cssDir, imgDir, sassDir, fontsDir, jsDir, soundDir } = config.dir
 
 const dev = argv.watch ? true : false
 const production = argv.prod ? true : false
@@ -189,6 +189,12 @@ gulp.task('img', () => (
 ))
 
 
+// Sounds
+gulp.task('sound', () => {
+  gulp.src(srcDir + 'sounds/*.m4a')
+    .pipe(gulp.dest(destDir + soundDir))
+})
+
 
 // HTML
 gulp.task('html', () => {
@@ -246,7 +252,7 @@ gulp.task('dev', () => {
   runSequence(
     'clean',
     ['twig', 'html'],
-    ['fonts', 'sass', 'img'],
+    ['fonts', 'sass', 'img', 'sound'],
     'browser_sync',
     'js'
   )
@@ -264,7 +270,7 @@ gulp.task('dev', () => {
 gulp.task('build', () => {
   runSequence(
     'clean',
-    ['twig', 'fonts', 'sass', 'img', 'js'],
+    ['twig', 'fonts', 'sass', 'img', 'js', 'sound'],
     'revreplace',
   )
 })

@@ -11,11 +11,16 @@ export default {
     jsDir: 'js/',
     sassDir: 'sass/',
     fontsDir: 'fonts/',
+    soundDir: 'sounds/',
   },
   fonts: {
     formats: 'woff woff2',
     custom: {
       'Noto Sans': [400, 700],
+      'Noto Naskh Arabic': [400],
+      'Noto Sans CJKjp': [400],
+      'Noto Sans Cypriot': [400],
+      'Noto Sans Hebrew': [400],
     },
   },
   css: {

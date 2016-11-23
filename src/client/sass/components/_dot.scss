@@ -1,0 +1,39 @@
+.dots {
+  position: fixed;
+  transform-origin: 50vw 50vh;
+  animation: snow 400s linear infinite alternate;
+  .dot {
+    position: absolute;
+    // top: random(200) + px;
+    width: .2rem;
+    height: .2rem;
+    opacity: 0.86;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 9px 0 rgba(255,255,255,0.73);
+    animation: dots 1s linear infinite alternate;
+  }
+  @for $i from 1 through 30 {
+    .dot:nth-child(#{$i}) {
+      top: random(100) + vh;
+      left: random(100) + vw
+    }
+  }
+
+  @keyframes snow {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: rotate(180deg);
+    }
+  }
+  @keyframes dots {
+    from {
+      box-shadow: 0 1px 9px 0 rgba(255,255,255,0.73);
+    }
+    to {
+      box-shadow: 0 1px 9px 0 rgba(255,255,255,0);
+    }
+  }
+}
