@@ -50,7 +50,6 @@ export default () => {
      * helper
      */
     watch(({ type, payload }) => {
-      console.log({ type, payload })
       switch (type) {
 
         /**
