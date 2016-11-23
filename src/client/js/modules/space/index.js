@@ -31,6 +31,7 @@ export default () => {
     const $user: HTMLElement = document.querySelector('.user')
     const $userId: HTMLElement = document.querySelector('#user_id')
     const $writers: HTMLElement = document.querySelector('.writers')
+    const $splash: HTMLElement = document.querySelector('.splash')
 
     // Initialyze colors
     const COLORS: Array<string> = ['#457DF3', '#FC1B1F', '#1AB05A', '#FDBD2C']
@@ -67,11 +68,12 @@ export default () => {
         case actionTypes.ADD_USER: {
           if (!state.user) {
             const { user } = payload
-            $user.innerHTML = `
-              <li>userId: ${user.id}</li>
-              <li>roomId: ${user.roomId}</li>
-            `
+            // $user.innerHTML = `
+            //   <li>userId: ${user.id}</li>
+            //   <li>roomId: ${user.roomId}</li>
+            // `
             $userId.innerHTML = `${user.id}`
+            $splash.innerHTML = `${state.rooms[user.roomId].name}`
             state.user = user
           }
           break
@@ -141,9 +143,9 @@ export default () => {
           // Display all rooms on wall
           const { rooms } = payload
           state.rooms = rooms
-          $rooms.innerHTML = rooms.map((room) => `
-            <div id="${room.id}" class="room">${room.name}</div>
-          `).join('')
+          // $rooms.innerHTML = rooms.map((room) => `
+          //   <div id="${room.id}" class="room">${room.name}</div>
+          // `).join('')
           return
         }
 
@@ -153,11 +155,13 @@ export default () => {
          */
         case actionTypes.CREATE_ROOM: {
           const { room } = payload
-          $rooms.innerHTML += `
-            <div id="${room.id}" class="room">
-              ${room.name}
-            </div>
-          `
+          // state.rooms.push
+          // $rooms.innerHTML += `
+          //   <div id="${room.id}" class="room">
+          //     ${room.name}
+          //   </div>
+          // `
+          $splash.innerHTML = `${room.name}`
           break
         }
 
@@ -172,14 +176,16 @@ export default () => {
           // Update state and UI
           state.user.roomId = user.roomId
           $messages.innerHTML += ''
-          $user.innerHTML = `
-            <li>id: ${user.id}</li>
-            <li>roomId: ${user.roomId}</li>
-          `
+          // $user.innerHTML = `
+          //   <li>id: ${user.id}</li>
+          //   <li>roomId: ${user.roomId}</li>
+          // `
+          $splash.innerHTML = `${room.name}`
           break
         }
 
         case actionTypes.START_TYPING: {
+          document.querySelector('.modal').style.display = 'none'
           const { user } = payload
           if (!state.countries[user.language] ||!document.querySelector(`#${user.language}`)) {
             state.countries[user.language] = { count: 1 }
