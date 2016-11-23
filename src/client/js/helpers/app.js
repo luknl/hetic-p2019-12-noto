@@ -8,8 +8,8 @@ type Module = {
 type Page = string
 
 export const run = (modules: Array<Module>, page: Page) => {
-  Object.values(modules).forEach((module) => {
-    if (module.page === page) module.module()
+  Object.keys(modules).forEach((key) => {
+    if (module.page === page) modules[key].module()
   })
 }
 
