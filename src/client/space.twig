@@ -4,6 +4,11 @@
 
 {% block main %}
   <div class="splash">NotoSpace</div>
+  <div class="dots">
+    {% for i in 0..29 %}
+    <div class="dot"></div>
+    {% endfor %}
+  </div>
   <ul class="messages"></ul>
   <div class="rooms"></div>
   <ul class="user"></ul>

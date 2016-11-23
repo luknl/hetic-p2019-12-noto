@@ -5,7 +5,7 @@
 .message {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 7rem;
   height: 3rem;
   // Will be removed
@@ -33,7 +33,7 @@
     position: absolute;
     display: flex;
     opacity: .5;
-    right: 0;
+    right: 0.5rem;
     bottom: -.8rem;
     color: white;
     font-size: .6rem;

@@ -4,11 +4,15 @@ import moment from 'moment'
 import io from 'socket.io-client'
 import { flag } from 'country-code-emoji'
 import { SOCKET_URL } from '@shared/config'
+import { isMobile } from  '@helpers/browser'
 import { dispatch, watch } from '@shared/helpers/socket'
 import * as actions from '@shared/modules/notoSpace/actions'
 import type { User, Room } from '@shared/modules/notoSpace/types'
 
 export default () => {
+
+    // If user is on desktop, redirect it to space page
+    if (isMobile()) window.location.href = 'messenger.html'
 
     // Initialyze sockets
     const socket = io(SOCKET_URL)
@@ -81,7 +85,7 @@ export default () => {
           const randomColor = COLORS[Math.floor(Math.random() * 4)]
           $messages.innerHTML += `
             <li
-              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="background-color: ${randomColor}; font-size: ${message.value.length <= 6 ? 1.7 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
@@ -102,7 +106,7 @@ export default () => {
           // Display all message on wall
           $messages.innerHTML = messages.map((message) => `
             <li
-              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 2 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
+              style="background-color: ${COLORS[Math.floor(Math.random() * 4)]}; font-size: ${message.value.length <= 6 ? 1.7 : .7}rem; margin: ${Math.random() * 3 + 1}rem ${Math.random() * 3 + 1}rem 0 0"
               class="message"
               data-date="from ${message.country} at ${moment(message.createAt).format('h:mm a')}"
             >
