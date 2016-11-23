@@ -17,7 +17,6 @@
   @include respond-to(80rem) {
     position: fixed;
     left: 0;
-    top: -0.625rem;
     flex-direction: row;
     justify-content: flex-start;
     width: 3.25rem;
@@ -89,7 +88,7 @@
     color: #FFFFFF;
     font-size: 10px;
     text-transform: uppercase;
-    
+
     @include respond-to(37.5rem) {
       // Responsive phablets (600px)
       font-size: 14px;
