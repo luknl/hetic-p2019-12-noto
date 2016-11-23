@@ -1212,7 +1212,7 @@ buffers@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/buffers/-/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
 
-bufferstreams@^1.0.2, bufferstreams@^1.1.0, bufferstreams@~1.1.0:
+bufferstreams@^1.0.2, bufferstreams@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/bufferstreams/-/bufferstreams-1.1.1.tgz#0161373060ac5988eff99058731114f6e195d51e"
   dependencies:
@@ -2323,7 +2323,7 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
-event-stream@~3.3.0, event-stream@~3.3.2:
+event-stream@~3.3.0:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
   dependencies:
@@ -2465,6 +2465,10 @@ fd-slicer@~1.0.1:
   resolved "https://registry.yarnpkg.com/fd-slicer/-/fd-slicer-1.0.1.tgz#8b5bcbd9ec327c5041bf9ab023fd6750f1177e65"
   dependencies:
     pend "~1.2.0"
+
+fg-loadcss:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fg-loadcss/-/fg-loadcss-1.2.0.tgz#d4e35c809dd1501e4d51bdb803413afa2e7c42a2"
 
 figures@^1.3.5:
   version "1.7.0"
@@ -3066,14 +3070,6 @@ gulp-decompress@^1.2.0:
     gulp-util "^3.0.1"
     readable-stream "^2.0.2"
 
-gulp-filter@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/gulp-filter/-/gulp-filter-3.0.1.tgz#7c6ffce5b563e89de7a90dfceff16ec8a8cb1562"
-  dependencies:
-    gulp-util "^3.0.6"
-    multimatch "^2.0.0"
-    streamfilter "^1.0.5"
-
 gulp-if@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/gulp-if/-/gulp-if-2.0.1.tgz#55f3edf82cecdfcf6035aa5d0686979aab0dac28"
@@ -3147,14 +3143,6 @@ gulp-rev@^6.0.1:
     sort-keys "^1.0.0"
     through2 "^2.0.0"
     vinyl-file "^1.1.0"
-
-gulp-rewrite-css@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/gulp-rewrite-css/-/gulp-rewrite-css-0.0.8.tgz#c8cb4aa7a504e5ad8ebbafff0a8b182bf1f432f0"
-  dependencies:
-    bufferstreams "~1.1.0"
-    event-stream "~3.3.2"
-    gulp-util "~3.0.6"
 
 gulp-sass@2.3.2:
   version "2.3.2"
@@ -4648,15 +4636,6 @@ moment:
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
-
-multimatch@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/multimatch/-/multimatch-2.1.0.tgz#9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b"
-  dependencies:
-    array-differ "^1.0.0"
-    array-union "^1.0.1"
-    arrify "^1.0.0"
-    minimatch "^3.0.0"
 
 multipipe@^0.1.0, multipipe@^0.1.2:
   version "0.1.2"
@@ -6319,12 +6298,6 @@ stream-throttle@^0.1.3:
   dependencies:
     commander "^2.2.0"
     limiter "^1.0.5"
-
-streamfilter@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/streamfilter/-/streamfilter-1.0.5.tgz#87507111beb8e298451717b511cfed8f002abf53"
-  dependencies:
-    readable-stream "^2.0.2"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
