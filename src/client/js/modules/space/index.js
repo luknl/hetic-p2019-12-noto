@@ -171,7 +171,6 @@ export default () => {
         }
 
         case actionTypes.START_TYPING: {
-          document.querySelector('.modal').style.display = 'none'
           const { user } = payload
           if (!state.countries[user.language] ||!document.querySelector(`#${user.language}`)) {
             state.countries[user.language] = { count: 1 }
