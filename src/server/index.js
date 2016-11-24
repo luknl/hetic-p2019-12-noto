@@ -191,7 +191,7 @@ io.on('connection', (socket) => {
         socket.join(roomId)
         // Call clients
         dispatch(
-          createRoom(room),
+          createRoom(room, user),
           joinRoom(room, user),
         )(io)
         break

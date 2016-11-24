@@ -37,9 +37,9 @@ export const leaveRoom = (room: Room): Action => ({
   payload: { room },
 })
 
-export const createRoom = (room: Room): Action => ({
+export const createRoom = (room: Room, user: Room): Action => ({
   type: CREATE_ROOM,
-  payload: { room },
+  payload: { room, user },
 })
 
 export const stopTyping = (user: User): Action => ({

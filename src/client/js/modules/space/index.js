@@ -27,8 +27,6 @@ export default () => {
 
     // Select DOM elements
     const $messages: HTMLElement = document.querySelector('.messages')
-    const $rooms: HTMLElement = document.querySelector('.rooms')
-    const $user: HTMLElement = document.querySelector('.user')
     const $userId: HTMLElement = document.querySelector('#user_id')
     const $writers: HTMLElement = document.querySelector('.writers')
     const $splash: HTMLElement = document.querySelector('.splash')
@@ -143,9 +141,6 @@ export default () => {
           // Display all rooms on wall
           const { rooms } = payload
           state.rooms = rooms
-          // $rooms.innerHTML = rooms.map((room) => `
-          //   <div id="${room.id}" class="room">${room.name}</div>
-          // `).join('')
           return
         }
 
@@ -154,13 +149,8 @@ export default () => {
          * Add new room
          */
         case actionTypes.CREATE_ROOM: {
-          const { room } = payload
-          // state.rooms.push
-          // $rooms.innerHTML += `
-          //   <div id="${room.id}" class="room">
-          //     ${room.name}
-          //   </div>
-          // `
+          const { room, user } = payload
+          if (state.user && user.id !== state.user.id) return
           $splash.innerHTML = `${room.name}`
           break
         }
@@ -176,10 +166,6 @@ export default () => {
           // Update state and UI
           state.user.roomId = user.roomId
           $messages.innerHTML += ''
-          // $user.innerHTML = `
-          //   <li>id: ${user.id}</li>
-          //   <li>roomId: ${user.roomId}</li>
-          // `
           $splash.innerHTML = `${room.name}`
           break
         }
