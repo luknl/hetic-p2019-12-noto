@@ -230,9 +230,11 @@
      bottom: 40px;
      display: none;
      cursor: pointer;
+     width: 100vw;
 
      &__button {
        display: block;
+       width: 200px;
        padding: .7rem;
        margin: auto;
        margin-top: -6.25rem;
