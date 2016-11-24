@@ -12,7 +12,6 @@ export default () => {
         tofuSpaceBarDown   = document.querySelector('.tofu__spacebar__button--down'),
         tofuSpaceBarFill   = document.querySelector('.tofu__spacebar__button_fill'),
         tofuSpaceBarCircle = document.querySelector('.tofu__spacebar__circle'),
-        tofuExperience = document.querySelector('.tofu__experience'),
         svgCircle   = document.querySelector('animateTransform'),
         letterContent = document.querySelector('.letter'),
         letterMain = document.querySelector('.letter__main'),
@@ -91,7 +90,7 @@ export default () => {
             let randomColor = Math.floor(Math.random()*colors.length)
             characters.style.color = colors[randomColor]
             // add class to animte the transformation from tofu to character
-            characters.className += ` tofu__animation`
+            characters.className += ' tofu__animation'
           }, i * 400)
         }
 
@@ -145,7 +144,7 @@ export default () => {
 
   // convert keycode for Android
   function getKeyCode(str) {
-    return str.charCodeAt(str.length - 1);
+    return str.charCodeAt(str.length - 1)
   }
 
   // svg circle animation function
