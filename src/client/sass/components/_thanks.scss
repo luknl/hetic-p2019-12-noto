@@ -10,6 +10,7 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    position: relative;
   }
   &__img {
     width: 240%;
@@ -97,7 +98,7 @@
     align-items: center;
     flex-direction: row;
     position: absolute;
-    bottom: 3.75rem;
+    bottom: 1.75rem;
     right: 1.25rem;
     width: 6.25rem;
     height: 6.25rem;
